@@ -2,4 +2,5 @@
     <string name="app_name">SeeVoice</string>
     <string name="recognizer_service_available">recoginizer service available</string>
     <string name="recognizer_service_incapable">recoginizer service incapable</string>
+    <string name="recording_voice_status">声音录制状态</string>
 </resources>
