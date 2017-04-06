@@ -1,8 +1,15 @@
 <resources>
     <string name="app_name">SeeVoice</string>
-    <string name="recognizer_service_available">recoginizer service available</string>
-    <string name="recognizer_service_incapable">recoginizer service incapable</string>
+    <string name="recognizer_service_available">recognizer service available</string>
+    <string name="recognizer_service_incapable">recognizer service incapable</string>
     <string name="recording_voice_status">声音录制状态</string>
     <string name="advertising_title">广告</string>
     <string name="button_go_to_homepage">跳转到首页</string>
+    <string name="label_empty"> </string>
+    <string name="label_exercise">练习</string>
+    <string name="label_record">录入</string>
+    <string name="menu_account_sign_up">注册</string>
+    <string name="menu_exercise_to_record">@string/label_record</string>
+    <string name="menu_to_select_language">选择语言</string>
+    <string name="menu_to_select_exercise_database">选择练习库</string>
 </resources>
