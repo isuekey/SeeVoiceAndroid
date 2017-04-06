@@ -3,7 +3,10 @@ package com.futhark.android.seevoice.base;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.futhark.android.seevoice.model.message.BaseActivityMessage;
+
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * use eventbus
@@ -22,5 +25,9 @@ public class BaseActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onMessageOfBaseActivity(BaseActivityMessage baseActivityMessage){
     }
 }

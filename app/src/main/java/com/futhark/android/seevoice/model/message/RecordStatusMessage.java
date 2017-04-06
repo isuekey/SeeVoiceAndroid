@@ -1,4 +1,4 @@
-package com.futhark.android.seevoice.message;
+package com.futhark.android.seevoice.model.message;
 
 /**
  * record status message

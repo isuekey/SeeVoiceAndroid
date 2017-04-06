@@ -1,4 +1,4 @@
-package com.futhark.android.seevoice.activity;
+package com.futhark.android.seevoice.controller.activity;
 
 import android.media.AudioFormat;
 import android.media.AudioRecord;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.futhark.android.seevoice.R;
 import com.futhark.android.seevoice.base.BaseActivity;
-import com.futhark.android.seevoice.message.RecordStatusMessage;
+import com.futhark.android.seevoice.model.message.RecordStatusMessage;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

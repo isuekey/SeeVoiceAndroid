@@ -3,4 +3,6 @@
     <string name="recognizer_service_available">recoginizer service available</string>
     <string name="recognizer_service_incapable">recoginizer service incapable</string>
     <string name="recording_voice_status">声音录制状态</string>
+    <string name="advertising_title">广告</string>
+    <string name="button_go_to_homepage">跳转到首页</string>
 </resources>
