@@ -29,16 +29,22 @@ public class ExerciseListAdapter<T extends ExerciseListAdapter.ExerciseItemInter
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
+        ExerciseItemHolder holder = null;
         if(v == null){
             v = inflater.inflate(R.layout.item_of_exercise_list, parent, false);
+            holder = new ExerciseItemHolder(v);
+            v.setTag(holder);
+        }else{
+            holder = (ExerciseItemHolder)v.getTag();
         }
-        return super.getView(position, convertView, parent);
+        holder.setDataToDisplay(getItem(position));
+        return v;
     }
 
-    private class ItemHolder{
+    class ExerciseItemHolder{
         @BindView(R.id.item_of_exercise_list_title)
         TextView titleText;
-        public ItemHolder(View itemView){
+        public ExerciseItemHolder(View itemView){
             ButterKnife.bind(this, itemView);
         }
 

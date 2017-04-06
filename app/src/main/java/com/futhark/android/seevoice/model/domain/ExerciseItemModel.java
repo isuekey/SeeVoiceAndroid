@@ -10,6 +10,10 @@ import com.futhark.android.seevoice.controller.adapter.ExerciseListAdapter;
 public class ExerciseItemModel implements ExerciseListAdapter.ExerciseItemInterface {
     private String title;
 
+    public ExerciseItemModel(String title) {
+        this.title = title;
+    }
+
     @Override
     public String getTitle() {
         return title;
