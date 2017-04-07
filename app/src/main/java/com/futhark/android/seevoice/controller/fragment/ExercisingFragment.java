@@ -1,14 +1,25 @@
 package com.futhark.android.seevoice.controller.fragment;
 
+import android.media.AudioFormat;
+import android.media.AudioRecord;
+import android.media.MediaRecorder;
+import android.media.MediaSyncEvent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.futhark.android.seevoice.R;
 import com.futhark.android.seevoice.base.BaseFragment;
 import com.futhark.android.seevoice.model.domain.ExerciseItemModel;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * exercising fragment
@@ -26,6 +37,10 @@ public class ExercisingFragment extends BaseFragment {
     }
 
     private ExerciseItemModel itemModel;
+    @BindView(R.id.touch_pressing_when_talking)
+    ImageView pressingWhenTalking;
+
+    private AudioRecord audioRecord;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +55,45 @@ public class ExercisingFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_exercising, container, false);
+        ButterKnife.bind(this, view);
+        view.setOnTouchListener(this.onTouchListener);
+        return view;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(audioRecord == null){
+            int minSize = AudioRecord.getMinBufferSize(32000, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
+            audioRecord = new AudioRecord(MediaRecorder.AudioSource.DEFAULT, 32000, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, 2 * minSize);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(audioRecord != null){
+            audioRecord.stop();
+            audioRecord.release();
+            audioRecord = null;
+        }
+    }
+
+    private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()){
+                case MotionEvent.ACTION_DOWN:
+                    audioRecord.startRecording();
+                    Log.d(TAG,"start to record");
+                    break;
+                case MotionEvent.ACTION_UP:
+                    audioRecord.stop();
+                    Log.d(TAG,"stop recording");
+                    break;
+            }
+            return false;
+        }
+    };
 }

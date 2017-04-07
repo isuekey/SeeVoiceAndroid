@@ -8,6 +8,7 @@
     <string name="label_empty"> </string>
     <string name="label_exercise">练习</string>
     <string name="label_record">录入</string>
+    <string name="label_pressing_when_talking">按住说</string>
     <string name="menu_account_sign_up">注册</string>
     <string name="menu_exercise_to_record">@string/label_record</string>
     <string name="menu_to_select_language">选择语言</string>

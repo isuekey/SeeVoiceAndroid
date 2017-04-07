@@ -14,6 +14,7 @@ import org.greenrobot.eventbus.Subscribe;
  */
 
 public class BaseFragment extends Fragment {
+    public static final String TAG = "see_tag_fragment";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

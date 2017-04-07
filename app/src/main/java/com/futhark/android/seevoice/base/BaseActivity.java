@@ -14,7 +14,7 @@ import org.greenrobot.eventbus.Subscribe;
  */
 
 public class BaseActivity extends Activity {
-    public static final String TAG = "see_tag";
+    public static final String TAG = "see_tag_activit";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
