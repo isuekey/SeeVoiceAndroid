@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.futhark.android.seevoice.R;
@@ -48,8 +50,9 @@ public class ExerciseListFragment extends BaseFragment {
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_exercise_record_standard, menu);
     }
 
     private void prepareExerciseListView(Context context){
@@ -58,10 +61,18 @@ public class ExerciseListFragment extends BaseFragment {
         }
         exerciseListAdapter = new ExerciseListAdapter<>(context);
         exerciseListView.setAdapter(exerciseListAdapter);
+        exerciseListView.setOnItemClickListener(onItemClickListener);
     }
 
     private void loadExerciseData(){
         exerciseListAdapter.add(new ExerciseItemModel("测试"));
         exerciseListAdapter.notifyDataSetChanged();
     }
+
+    private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            ExerciseItemModel itemModel = exerciseListAdapter.getItem(position);
+        }
+    };
 }
