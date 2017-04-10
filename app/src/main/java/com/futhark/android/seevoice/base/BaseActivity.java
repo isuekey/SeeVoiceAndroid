@@ -3,6 +3,7 @@ package com.futhark.android.seevoice.base;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.futhark.android.seevoice.model.constant.AppConstant;
 import com.futhark.android.seevoice.model.message.BaseActivityMessage;
 
 import org.greenrobot.eventbus.EventBus;
@@ -14,7 +15,7 @@ import org.greenrobot.eventbus.Subscribe;
  */
 
 public class BaseActivity extends Activity {
-    public static final String TAG = "see_tag_activit";
+    public static final String TAG = AppConstant.TAG;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

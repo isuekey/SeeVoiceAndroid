@@ -1,5 +1,6 @@
 package com.futhark.android.seevoice.controller.fragment;
 
+import android.graphics.Canvas;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
@@ -10,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,6 +19,7 @@ import android.widget.ImageView;
 import com.futhark.android.seevoice.R;
 import com.futhark.android.seevoice.base.BaseFragment;
 import com.futhark.android.seevoice.model.domain.ExerciseItemModel;
+import com.futhark.android.seevoice.view.DisplayVoiceView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +42,8 @@ public class ExercisingFragment extends BaseFragment {
     private ExerciseItemModel itemModel;
     @BindView(R.id.touch_pressing_when_talking)
     ImageView pressingWhenTalking;
+    @BindView(R.id.display_exercising_voice)
+    DisplayVoiceView displayVoiceView;
 
     private AudioRecord audioRecord;
 
@@ -58,6 +63,7 @@ public class ExercisingFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_exercising, container, false);
         ButterKnife.bind(this, view);
         view.setOnTouchListener(this.onTouchListener);
+        displayVoiceView.setDisplayVoiceController(this.displayVoiceController);
         return view;
     }
 
@@ -93,7 +99,18 @@ public class ExercisingFragment extends BaseFragment {
                     Log.d(TAG,"stop recording");
                     break;
             }
-            return false;
+            return true;
+        }
+    };
+    private DisplayVoiceView.DisplayVoiceController displayVoiceController = new DisplayVoiceView.DisplayVoiceController() {
+        @Override
+        public void draw(Canvas canvas) {
+
+        }
+
+        @Override
+        public void update() {
+
         }
     };
 }
