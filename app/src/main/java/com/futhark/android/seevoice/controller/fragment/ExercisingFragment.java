@@ -1,6 +1,10 @@
 package com.futhark.android.seevoice.controller.fragment;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Rect;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
@@ -19,6 +23,8 @@ import com.futhark.android.seevoice.base.BaseFragment;
 import com.futhark.android.seevoice.model.domain.ExerciseItemModel;
 import com.futhark.android.seevoice.view.DisplayVoiceView;
 
+import java.util.Arrays;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -36,6 +42,7 @@ public class ExercisingFragment extends BaseFragment {
         fragment.setArguments(arguments);
         return fragment;
     }
+    private int recordDataSize = 0;
 
     private ExerciseItemModel itemModel;
     @BindView(R.id.touch_pressing_when_talking)
@@ -44,11 +51,14 @@ public class ExercisingFragment extends BaseFragment {
     DisplayVoiceView displayVoiceView;
 
     private AudioRecord audioRecord;
+    private Paint paint;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle arguments = getArguments();
+        paint = new Paint();
+        paint.setColor(Color.WHITE);
         if(arguments == null) return;
         if(arguments.containsKey(FRAGMENT_EXERCISING_ARGUMENT_ITEM_MODEL)){
             this.itemModel = (ExerciseItemModel) arguments.getSerializable(FRAGMENT_EXERCISING_ARGUMENT_ITEM_MODEL);
@@ -61,6 +71,8 @@ public class ExercisingFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_exercising, container, false);
         ButterKnife.bind(this, view);
         pressingWhenTalking.setOnTouchListener(this.onTouchListener);
+        recordDataSize = AudioRecord.getMinBufferSize(32000, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
+        this.displayVoiceController.onCreate();
         displayVoiceView.setDisplayVoiceController(this.displayVoiceController);
         return view;
     }
@@ -69,8 +81,7 @@ public class ExercisingFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
         if(audioRecord == null){
-            int minSize = AudioRecord.getMinBufferSize(32000, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
-            audioRecord = new AudioRecord(MediaRecorder.AudioSource.DEFAULT, 32000, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, 2 * minSize);
+            audioRecord = new AudioRecord(MediaRecorder.AudioSource.DEFAULT, 32000, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, 2 * recordDataSize);
         }
     }
 
@@ -102,20 +113,68 @@ public class ExercisingFragment extends BaseFragment {
         }
     };
     private DisplayVoiceView.DisplayVoiceController displayVoiceController = new DisplayVoiceView.DisplayVoiceController() {
-
+        private short[] recordData = null;
+        private short[] recordDisplayData = null;
+        private short empty = 0;
+        private int currentPosition = 0;
+        Path wavePath;
         @Override
         public void draw(Canvas canvas) {
+            int startAt = currentPosition - recordDataSize < 0 ? 0 : currentPosition - recordDataSize;
+            int dataLength = currentPosition - startAt;
+            Rect canvasRect = canvas.getClipBounds();
+            int paddingTop = canvasRect.height() /20;
+            int wavePeak = canvasRect.height() /2 - paddingTop;
+            paint.setColor(Color.BLACK);
+            canvas.drawPaint(paint);
+
+            paint.setColor(Color.WHITE);
+            wavePath = new Path();
+            int verticalCenter = canvasRect.height() / 2;
+            float max = 32767f;
+            float zoom = 16;
+            float dotWidth = canvasRect.width() * 1.0f / recordDataSize;
+            for(int index = startAt; index < dataLength; ++index){
+                wavePath.lineTo((index - startAt) * dotWidth, recordData[index] * zoom / max + verticalCenter);
+            }
+            canvas.drawPath(wavePath, paint);
 
         }
 
         @Override
         public void update() {
-
+            if(audioRecord.getRecordingState() != AudioRecord.RECORDSTATE_RECORDING) return;
+            int read = audioRecord.read(recordDisplayData, currentPosition, recordDataSize);
+            switch (read){
+                case AudioRecord.ERROR:
+                    Log.d(TAG," 不知道什么东西错了");
+                    break;
+                case AudioRecord.ERROR_BAD_VALUE:
+                    Log.d(TAG, "数据格式有问题");
+                    break;
+                case AudioRecord.ERROR_INVALID_OPERATION:
+                    Log.d(TAG, "状态不正确");
+                    break;
+                default:
+                    if(read > 0) {
+                        System.arraycopy(recordDisplayData, 0, recordData, currentPosition, read);
+                        currentPosition += read;
+                    }
+                    break;
+            }
         }
 
         @Override
         public void clear() {
+            Arrays.fill(recordData, empty);
+            Arrays.fill(recordDisplayData, empty);
+            currentPosition = 0;
+        }
 
+        @Override
+        public void onCreate() {
+            recordData = new short[recordDataSize * 2];
+            recordDisplayData = new short[recordDataSize];
         }
     };
 }

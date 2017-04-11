@@ -20,7 +20,7 @@ public class ExerciseItemModel implements ExerciseListAdapter.ExerciseItemInterf
     public String getTitle() {
         return title;
     }
-
+    @SuppressWarnings("unused")
     public void setTitle(String title) {
         this.title = title;
     }
