@@ -6,5 +6,5 @@ package com.futhark.android.seevoice.model.constant;
  */
 
 public interface AppConstant {
-    String TAG = "see_tag_activit";
+    String TAG = "see_voice_application";
 }

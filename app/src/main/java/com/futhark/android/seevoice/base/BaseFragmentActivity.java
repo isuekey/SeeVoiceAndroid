@@ -13,7 +13,7 @@ import com.futhark.android.seevoice.R;
 
 public class BaseFragmentActivity extends BaseActivity {
     public static final String DUTY_FATE_FRAGMENT_INTENT = "duty_fate_fragment_intent";
-    private Fragment contentFragmeent;
+    private Fragment contentFragment;
     private boolean contentChangeSeal = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +25,21 @@ public class BaseFragmentActivity extends BaseActivity {
 
     private void handleActivityIntent(Intent activityIntent){
         if(activityIntent == null) return;
-        String fragmeentName = activityIntent.getStringExtra(DUTY_FATE_FRAGMENT_INTENT);
-        if(fragmeentName == null) return;
-        if(contentChangeSeal && contentFragmeent != null){
+        String fragmentName = activityIntent.getStringExtra(DUTY_FATE_FRAGMENT_INTENT);
+        if(fragmentName == null) return;
+        if(contentChangeSeal && contentFragment != null){
             return;
         }
-        contentFragmeent = Fragment.instantiate(this, fragmeentName);
-        getFragmentManager().beginTransaction().add(R.id.activity_fragment_base, contentFragmeent).commit();
+        contentFragment = Fragment.instantiate(this, fragmentName);
+        getFragmentManager().beginTransaction().add(R.id.activity_fragment_base, contentFragment).commit();
+    }
+    @SuppressWarnings("unused")
+    public boolean isContentChangeSeal() {
+        return contentChangeSeal;
+    }
+
+    @SuppressWarnings("unused")
+    public void setContentChangeSeal(boolean contentChangeSeal) {
+        this.contentChangeSeal = contentChangeSeal;
     }
 }

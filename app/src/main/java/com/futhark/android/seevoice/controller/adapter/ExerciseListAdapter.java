@@ -25,11 +25,12 @@ public class ExerciseListAdapter<T extends ExerciseListAdapter.ExerciseItemInter
         this.inflater = LayoutInflater.from(context);
     }
 
-    @NonNull
+    @SuppressWarnings("unchecked")
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    @NonNull
+    public View getView(int position, View convertView,@NonNull ViewGroup parent) {
         View v = convertView;
-        ExerciseItemHolder holder = null;
+        ExerciseItemHolder holder;
         if(v == null){
             v = inflater.inflate(R.layout.item_of_exercise_list, parent, false);
             holder = new ExerciseItemHolder(v);
@@ -44,11 +45,11 @@ public class ExerciseListAdapter<T extends ExerciseListAdapter.ExerciseItemInter
     class ExerciseItemHolder{
         @BindView(R.id.item_of_exercise_list_title)
         TextView titleText;
-        public ExerciseItemHolder(View itemView){
+        ExerciseItemHolder(View itemView){
             ButterKnife.bind(this, itemView);
         }
 
-        public void setDataToDisplay(T data){
+        void setDataToDisplay(T data){
             titleText.setText(data.getTitle());
         }
     }

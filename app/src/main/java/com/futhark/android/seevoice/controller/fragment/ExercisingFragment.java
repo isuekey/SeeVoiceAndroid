@@ -4,14 +4,12 @@ import android.graphics.Canvas;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
-import android.media.MediaSyncEvent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -62,7 +60,7 @@ public class ExercisingFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_exercising, container, false);
         ButterKnife.bind(this, view);
-        view.setOnTouchListener(this.onTouchListener);
+        pressingWhenTalking.setOnTouchListener(this.onTouchListener);
         displayVoiceView.setDisplayVoiceController(this.displayVoiceController);
         return view;
     }
@@ -91,6 +89,7 @@ public class ExercisingFragment extends BaseFragment {
         public boolean onTouch(View v, MotionEvent event) {
             switch (event.getAction()){
                 case MotionEvent.ACTION_DOWN:
+                    displayVoiceController.clear();
                     audioRecord.startRecording();
                     Log.d(TAG,"start to record");
                     break;
@@ -103,6 +102,7 @@ public class ExercisingFragment extends BaseFragment {
         }
     };
     private DisplayVoiceView.DisplayVoiceController displayVoiceController = new DisplayVoiceView.DisplayVoiceController() {
+
         @Override
         public void draw(Canvas canvas) {
 
@@ -110,6 +110,11 @@ public class ExercisingFragment extends BaseFragment {
 
         @Override
         public void update() {
+
+        }
+
+        @Override
+        public void clear() {
 
         }
     };

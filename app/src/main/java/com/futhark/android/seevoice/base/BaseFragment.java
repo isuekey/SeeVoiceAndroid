@@ -27,7 +27,7 @@ public class BaseFragment extends Fragment {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
-
+    @SuppressWarnings({"unused"})
     @Subscribe
     public void onMessageOfBaseFragment(BaseFragmentMessage baseFragmentMessage){
     }

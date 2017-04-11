@@ -74,7 +74,7 @@ public class ExerciseListFragment extends BaseFragment {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             ExerciseItemModel itemModel = exerciseListAdapter.getItem(position);
             ExercisingFragment fragment = ExercisingFragment.newInstance(itemModel);
-            getActivity().getFragmentManager().beginTransaction().replace(R.id.activity_fragment_base, fragment).commit();
+            getActivity().getFragmentManager().beginTransaction().add(R.id.activity_fragment_base, fragment).addToBackStack(null).commit();
         }
     };
 }

@@ -27,7 +27,7 @@ public class BaseActivity extends Activity {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
-
+    @SuppressWarnings({"unused"})
     @Subscribe
     public void onMessageOfBaseActivity(BaseActivityMessage baseActivityMessage){
     }

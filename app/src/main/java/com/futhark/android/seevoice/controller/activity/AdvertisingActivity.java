@@ -2,6 +2,7 @@ package com.futhark.android.seevoice.controller.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -28,6 +29,7 @@ public class AdvertisingActivity extends BaseActivity {
         setContentView(R.layout.activity_advertising);
         ButterKnife.bind(this);
         gotHomePageButton.setOnClickListener(this.buttonClickListener);
+        Log.d(TAG, "AdvertisingActivity");
     }
 
     private View.OnClickListener buttonClickListener = new View.OnClickListener() {
