@@ -3,6 +3,7 @@ package com.futhark.android.seevoice.model.domain;
 import com.futhark.android.seevoice.controller.adapter.ExerciseListAdapter;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 /**
  * exercise item model
@@ -10,7 +11,11 @@ import java.io.Serializable;
  */
 
 public class ExerciseItemModel implements ExerciseListAdapter.ExerciseItemInterface, Serializable {
+    private Long id;
+    private String text;
+    private Date date;
     private String title;
+    public ExerciseItemModel(){}
 
     public ExerciseItemModel(String title) {
         this.title = title;

@@ -63,13 +63,15 @@ public class DisplayVoiceView extends SurfaceView implements SurfaceHolder.Callb
         if(getDisplayVoiceController() == null){
             throw new RuntimeException("display voice controller should be set before the view will display");
         }
+        if (myThread == null) {
+            myThread = new MyThread(this.surfaceHolder, getDisplayVoiceController());
+        }
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         Log.d(TAG, "surface changed");
-        if (myThread == null) {
-            myThread = new MyThread(this.surfaceHolder, getDisplayVoiceController());
+        if(!myThread.isRunning()) {
             myThread.setRunning(true);
             myThread.start();
         }
@@ -88,11 +90,11 @@ public class DisplayVoiceView extends SurfaceView implements SurfaceHolder.Callb
                 Log.d(TAG, "Interrupted Exception", e);
             }
         }
+        myThread = null;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawText("Hell world! See Voice", getWidth() / 2, getHeight() / 2, paint);
         if (displayVoiceController != null) {
             displayVoiceController.draw(canvas);
         }
@@ -121,7 +123,7 @@ public class DisplayVoiceView extends SurfaceView implements SurfaceHolder.Callb
                     synchronized (surfaceHolder) {
                         postInvalidate();
                     }
-                    sleep(10);
+                    sleep(1);
                 } catch (InterruptedException e) {
                     Log.d(TAG, "Interrupted Exception", e);
                 } finally {
@@ -134,6 +136,10 @@ public class DisplayVoiceView extends SurfaceView implements SurfaceHolder.Callb
 
         void setRunning(boolean running) {
             this.running = running;
+        }
+
+        public boolean isRunning() {
+            return running;
         }
     }
 
