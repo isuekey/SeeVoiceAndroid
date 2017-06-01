@@ -19,7 +19,7 @@ import android.widget.ImageView;
 
 import com.futhark.android.seevoice.R;
 import com.futhark.android.seevoice.base.BaseFragment;
-import com.futhark.android.seevoice.model.database.TableVoiceSpecification;
+import com.futhark.android.seevoice.model.domain.ExerciseItemModel;
 import com.futhark.android.seevoice.view.DisplayVoiceView;
 
 import java.util.Arrays;
@@ -32,10 +32,10 @@ import butterknife.ButterKnife;
  * Created by liuhr on 07/04/2017.
  */
 
-public class ExercisingFragment extends BaseFragment {
+public class SeeVoiceFragment extends BaseFragment {
     public static final String FRAGMENT_EXERCISING_ARGUMENT_ITEM_MODEL = "fragment_exercising_argument_item_model";
-    public static ExercisingFragment newInstance(@NonNull TableVoiceSpecification.VoiceSpecificationEntry itemModel){
-        ExercisingFragment fragment = new ExercisingFragment();
+    public static SeeVoiceFragment newInstance(@NonNull  ExerciseItemModel itemModel){
+        SeeVoiceFragment fragment = new SeeVoiceFragment();
         Bundle arguments = new Bundle();
         arguments.putSerializable(FRAGMENT_EXERCISING_ARGUMENT_ITEM_MODEL, itemModel);
         fragment.setArguments(arguments);
@@ -43,13 +43,11 @@ public class ExercisingFragment extends BaseFragment {
     }
     private int recordDataSize = 0;
 
-    private TableVoiceSpecification.VoiceSpecificationEntry itemModel;
+    private ExerciseItemModel itemModel;
     @BindView(R.id.touch_pressing_when_talking)
     ImageView pressingWhenTalking;
     @BindView(R.id.display_exercising_voice)
     DisplayVoiceView displayVoiceView;
-    @BindView(R.id.display_voice_specification)
-    DisplayVoiceView specificationVoiceView;
 
     private AudioRecord audioRecord;
     private Paint paint;
@@ -63,21 +61,20 @@ public class ExercisingFragment extends BaseFragment {
         paint.setColor(Color.WHITE);
         if(arguments == null) return;
         if(arguments.containsKey(FRAGMENT_EXERCISING_ARGUMENT_ITEM_MODEL)){
-            this.itemModel = (TableVoiceSpecification.VoiceSpecificationEntry) arguments.getSerializable(FRAGMENT_EXERCISING_ARGUMENT_ITEM_MODEL);
+            this.itemModel = (ExerciseItemModel) arguments.getSerializable(FRAGMENT_EXERCISING_ARGUMENT_ITEM_MODEL);
         }
-        getActivity().setTitle(getActivity().getTitle() + " "+ itemModel.getTitle());
+
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_exercising, container, false);
+        View view = inflater.inflate(R.layout.fragment_see_voice, container, false);
         ButterKnife.bind(this, view);
         pressingWhenTalking.setOnTouchListener(this.onTouchListener);
         recordDataSize = AudioRecord.getMinBufferSize(32000, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT) * 2;
         this.displayVoiceController.onCreate();
         displayVoiceView.setDisplayVoiceController(this.displayVoiceController);
-        specificationVoiceView.setDisplayVoiceController(this.specificationController);
         return view;
     }
 
@@ -119,68 +116,12 @@ public class ExercisingFragment extends BaseFragment {
             return true;
         }
     };
-    private DisplayVoiceView.DisplayVoiceController specificationController = new DisplayVoiceView.DisplayVoiceController() {
-        private short[] recordData = null;
-        private float[] displayData = null;
-        @Override
-        public void draw(Canvas canvas) {
-            if(itemModel == null) {
-                Log.d(TAG, "no data");
-                return;
-            }
-            if(displayData == null){
-                displayData = new float[itemModel.getData().length * 4];
-                recordData = itemModel.getData();
-            }
-//            int startAt = currentPosition - recordDataSize < 0 ? 0 : currentPosition - recordDataSize;
-            int startAt = 0;
-//            int dataLength = recordDataSize;
-            int dataLength = recordData.length;
-            Rect canvasRect = canvas.getClipBounds();
-            int paddingTop = canvasRect.height() /20;
-            int wavePeak = canvasRect.height() /2 - paddingTop;
 
-            paint.setColor(Color.WHITE);
-            int verticalCenter = canvasRect.height() / 2;
-            float max = 32767f;
-            float zoom = 4;
-            float dotWidth = canvasRect.width() * 1.0f / (dataLength + 1);
-            float dotHeight = wavePeak * 1.f / max;
-            float startX = 0f;
-            float startY = canvasRect.height() / 2;
-            float endX, endY;
-            int displayIndex;
-            for(int index = startAt; index < dataLength; ++index){
-                endX = index * dotWidth;
-                endY = recordData[index] * dotHeight * zoom + verticalCenter;
-                displayIndex = index * 4;
-                displayData[displayIndex] = startX;
-                displayData[displayIndex + 1] = startY;
-                displayData[displayIndex + 2] = endX;
-                displayData[displayIndex + 3] = endY;
-                startX = endX;
-                startY = endY;
-            }
-            canvas.drawLines(displayData, paint);
+    interface SeeVoiceController extends DisplayVoiceView.DisplayVoiceController{
+        short[] getLastVoiceRecord();
+    }
 
-        }
-
-        @Override
-        public void update() {
-
-        }
-
-        @Override
-        public void clear() {
-
-        }
-
-        @Override
-        public void onCreate() {
-
-        }
-    };
-    private DisplayVoiceView.DisplayVoiceController displayVoiceController = new DisplayVoiceView.DisplayVoiceController() {
+    private SeeVoiceController displayVoiceController = new SeeVoiceController() {
         private short[] recordData = null;
         private short[] recordDisplayData = null;
         private float[] displayData = null;
@@ -246,7 +187,6 @@ public class ExercisingFragment extends BaseFragment {
 
         @Override
         public void clear() {
-            Log.d(TAG, "audio record is clear");
             Arrays.fill(recordData, empty);
             Arrays.fill(recordDisplayData, empty);
             Arrays.fill(displayData, empty);
@@ -259,5 +199,17 @@ public class ExercisingFragment extends BaseFragment {
             recordDisplayData = new short[recordDataSize];
             displayData = new float[recordDataSize * 4];
         }
+
+        @Override
+        public short[] getLastVoiceRecord() {
+            return recordData;
+        }
     };
+
+    public final short[] getLastRecordData(){
+        if(displayVoiceController != null){
+            return displayVoiceController.getLastVoiceRecord();
+        }
+        return null;
+    }
 }

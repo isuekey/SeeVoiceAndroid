@@ -164,5 +164,6 @@ public class DisplayVoiceView extends SurfaceView implements SurfaceHolder.Callb
          * 创建后初始化
          */
         void onCreate();
+
     }
 }

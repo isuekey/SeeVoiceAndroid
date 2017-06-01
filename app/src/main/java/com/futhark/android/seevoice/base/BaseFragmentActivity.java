@@ -13,6 +13,7 @@ import com.futhark.android.seevoice.R;
 
 public class BaseFragmentActivity extends BaseActivity {
     public static final String DUTY_FATE_FRAGMENT_INTENT = "duty_fate_fragment_intent";
+    public static final String DUTY_FATE_FRAGMENT_DATA_INTENT = "duty_fate_fragment_data_intent";
     private Fragment contentFragment;
     private boolean contentChangeSeal = false;
     @Override
@@ -31,6 +32,7 @@ public class BaseFragmentActivity extends BaseActivity {
             return;
         }
         contentFragment = Fragment.instantiate(this, fragmentName);
+        contentFragment.setArguments(activityIntent.getBundleExtra(DUTY_FATE_FRAGMENT_DATA_INTENT));
         getFragmentManager().beginTransaction().add(R.id.activity_fragment_base, contentFragment).commit();
     }
     @SuppressWarnings("unused")

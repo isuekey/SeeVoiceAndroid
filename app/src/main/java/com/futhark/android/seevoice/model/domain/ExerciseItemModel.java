@@ -1,5 +1,7 @@
 package com.futhark.android.seevoice.model.domain;
 
+import android.database.Cursor;
+
 import com.futhark.android.seevoice.controller.adapter.ExerciseListAdapter;
 
 import java.io.Serializable;
@@ -19,6 +21,9 @@ public class ExerciseItemModel implements ExerciseListAdapter.ExerciseItemInterf
 
     public ExerciseItemModel(String title) {
         this.title = title;
+    }
+    public ExerciseItemModel(Cursor cursor){
+
     }
 
     @Override

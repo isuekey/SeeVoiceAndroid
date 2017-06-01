@@ -10,17 +10,33 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 
 public class SeeVoiceSqliteDatabaseHelper extends SQLiteOpenHelper {
-    public SeeVoiceSqliteDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+
+    public static final int DATABASE_VERSION = 1;
+    public static  final String DATABASE_NAME = "SeeVoice.db";
+
+    public SeeVoiceSqliteDatabaseHelper(Context context){
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        db.execSQL(TableVoiceSpecification.createTableSql());
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        switch (oldVersion){
+            case 1:
+                handleUpgradeFrom0001(db, newVersion);
+                break;
+        }
     }
+
+    private void handleUpgradeFrom0001(SQLiteDatabase db, int newVersion) {
+        switch (newVersion){
+            case 2:
+                break;
+        }
+    }
+
 }

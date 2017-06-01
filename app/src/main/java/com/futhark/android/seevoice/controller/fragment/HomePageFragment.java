@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.futhark.android.seevoice.R;
 import com.futhark.android.seevoice.base.BaseFragment;
 import com.futhark.android.seevoice.base.BaseFragmentActivity;
+import com.futhark.android.seevoice.controller.adapter.SpecificationListAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +24,7 @@ import butterknife.ButterKnife;
 
 public class HomePageFragment extends BaseFragment {
     @BindView(R.id.click_home_to_exercise) View homeToExerciseView;
+    @BindView(R.id.click_home_to_record) View homeToRecordView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class HomePageFragment extends BaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         homeToExerciseView.setOnClickListener(onClickListener);
+        homeToRecordView.setOnClickListener(onClickListener);
     }
 
     @Override
@@ -58,6 +61,11 @@ public class HomePageFragment extends BaseFragment {
                     Intent goToExerciseActivityIntent = new Intent(getActivity(), BaseFragmentActivity.class);
                     goToExerciseActivityIntent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, ExerciseListFragment.class.getName());
                     getActivity().startActivity(goToExerciseActivityIntent);
+                    break;
+                case R.id.click_home_to_record:
+                    Intent goToRecordActivityIntent = new Intent(getActivity(), BaseFragmentActivity.class);
+                    goToRecordActivityIntent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, SpecificationListFragment.class.getName());
+                    getActivity().startActivity(goToRecordActivityIntent);
                     break;
             }
         }
