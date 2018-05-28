@@ -77,7 +77,11 @@ public class ExercisingFragment extends BaseFragment {
         recordDataSize = AudioRecord.getMinBufferSize(32000, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT) * 2;
         this.displayVoiceController.onCreate();
         displayVoiceView.setDisplayVoiceController(this.displayVoiceController);
-        specificationVoiceView.setDisplayVoiceController(this.specificationController);
+        if(itemModel == null){
+            specificationVoiceView.setVisibility(View.GONE);
+        }else{
+            specificationVoiceView.setDisplayVoiceController(this.specificationController);
+        }
         return view;
     }
 
@@ -107,13 +111,13 @@ public class ExercisingFragment extends BaseFragment {
                     displayVoiceController.clear();
                     audioRecord.startRecording();
                     isRecording = true;
-                    Log.d(TAG,"start to record");
+                    Log.d(Companion.getTAG(),"start to record");
                     break;
                 case MotionEvent.ACTION_CANCEL:
                 case MotionEvent.ACTION_UP:
                     if(audioRecord != null) audioRecord.stop();
                     isRecording = false;
-                    Log.d(TAG,"stop recording");
+                    Log.d(Companion.getTAG(),"stop recording");
                     break;
             }
             return true;
@@ -125,7 +129,7 @@ public class ExercisingFragment extends BaseFragment {
         @Override
         public void draw(Canvas canvas) {
             if(itemModel == null) {
-                Log.d(TAG, "no data");
+                Log.d(Companion.getTAG(), "no data");
                 return;
             }
             if(displayData == null){
@@ -227,13 +231,13 @@ public class ExercisingFragment extends BaseFragment {
             int read = audioRecord.read(recordDisplayData, 0, recordDataSize);
             switch (read){
                 case AudioRecord.ERROR:
-                    Log.d(TAG," 不知道什么东西错了");
+                    Log.d(Companion.getTAG()," 不知道什么东西错了");
                     break;
                 case AudioRecord.ERROR_BAD_VALUE:
-                    Log.d(TAG, "数据格式有问题");
+                    Log.d(Companion.getTAG(), "数据格式有问题");
                     break;
                 case AudioRecord.ERROR_INVALID_OPERATION:
-                    Log.d(TAG, "操作不正确");
+                    Log.d(Companion.getTAG(), "操作不正确");
                     break;
                 default:
                     if(read > 0) {
@@ -246,7 +250,7 @@ public class ExercisingFragment extends BaseFragment {
 
         @Override
         public void clear() {
-            Log.d(TAG, "audio record is clear");
+            Log.d(Companion.getTAG(), "audio record is clear");
             Arrays.fill(recordData, empty);
             Arrays.fill(recordDisplayData, empty);
             Arrays.fill(displayData, empty);

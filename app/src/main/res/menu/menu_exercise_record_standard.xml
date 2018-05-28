@@ -3,7 +3,4 @@
     <item
         android:id="@+id/menu_exercise_record_standard"
         android:title="@string/menu_exercise_to_record"/>
-    <item
-        android:id="@+id/menu_select_exercise_database"
-        android:title="@string/menu_to_select_exercise_database"/>
 </menu>

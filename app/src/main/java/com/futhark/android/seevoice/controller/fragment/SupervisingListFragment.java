@@ -24,23 +24,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * list specification
- * Created by liuhr on 30/05/2017.
+ * Exercise List Fragment
+ * Created by liuhr on 06/04/2017.
  */
 
-public class SpecificationListFragment extends BaseFragment {
+public class SupervisingListFragment extends BaseFragment {
     @BindView(R.id.fragment_empty_list_view)
     ListView specificationListView;
 
     private SpecificationListAdapter listAdapter;
     private Cursor cursor;
     private SQLiteDatabase database;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
 
     @Nullable
     @Override
@@ -53,16 +47,11 @@ public class SpecificationListFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        listAdapter = new SpecificationListAdapter(getActivity(), null, true);
+        listAdapter = new SpecificationListAdapter(getActivity(), null, true, false);
         specificationListView.setAdapter(listAdapter);
         database = new SeeVoiceSqliteDatabaseHelper(getActivity()).getReadableDatabase();
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_exercise_record_standard, menu);
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -99,6 +88,5 @@ public class SpecificationListFragment extends BaseFragment {
         goToRecordActivityIntent.putExtra(BaseFragmentActivity.Companion.getDUTY_FATE_FRAGMENT_INTENT(), RecordingFragment.class.getName());
         getActivity().startActivity(goToRecordActivityIntent);
     }
-
 
 }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.futhark.android.seevoice.R;
 import com.futhark.android.seevoice.base.BaseFragmentActivity;
 import com.futhark.android.seevoice.controller.fragment.ExercisingFragment;
+import com.futhark.android.seevoice.controller.fragment.RecordingFragment;
 import com.futhark.android.seevoice.model.database.TableVoiceSpecification;
 
 /**
@@ -23,10 +24,17 @@ import com.futhark.android.seevoice.model.database.TableVoiceSpecification;
 public class SpecificationListAdapter extends CursorAdapter {
     private LayoutInflater layoutInflater;
     private Context context;
+    private boolean showRecord = true;
     public SpecificationListAdapter(Context context, Cursor c, boolean autoRequery) {
         super(context, c, autoRequery);
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
+    }
+    public SpecificationListAdapter(Context context, Cursor c, boolean autoRequery, boolean showRecord) {
+        super(context, c, autoRequery);
+        this.context = context;
+        layoutInflater = LayoutInflater.from(context);
+        this.showRecord = showRecord;
     }
 
     @Override
@@ -49,6 +57,7 @@ public class SpecificationListAdapter extends CursorAdapter {
         private TextView titleView;
         private TextView phoneticView;
         private TextView authorView;
+        private View modifyBuffton;
         private TableVoiceSpecification.VoiceSpecificationEntry voiceSpecificationEntry;
         private ItemHolder(View itemView){
             this.itemView = itemView;
@@ -56,7 +65,12 @@ public class SpecificationListAdapter extends CursorAdapter {
             phoneticView = (TextView)itemView.findViewById(R.id.text_specification_phonetic);
             authorView = (TextView)itemView.findViewById(R.id.text_specification_author);
             itemView.findViewById(R.id.button_to_exercise).setOnClickListener(onClickListener);
-            itemView.findViewById(R.id.button_to_modify).setOnClickListener(onClickListener);
+            modifyBuffton = itemView.findViewById(R.id.button_to_modify);
+            if(!showRecord){
+                modifyBuffton.setVisibility(View.INVISIBLE);
+            }else{
+                modifyBuffton.setOnClickListener(onClickListener);
+            }
         }
 
         public void display(Cursor cursor){
@@ -71,6 +85,7 @@ public class SpecificationListAdapter extends CursorAdapter {
             public void onClick(View v) {
                 switch (v.getId()){
                     case R.id.button_to_modify:
+                        gotoModify(voiceSpecificationEntry);
                         break;
                     case R.id.button_to_exercise:
                         gotoExercise(voiceSpecificationEntry);
@@ -84,8 +99,16 @@ public class SpecificationListAdapter extends CursorAdapter {
         Intent exerciseIntent = new Intent(context, BaseFragmentActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(ExercisingFragment.FRAGMENT_EXERCISING_ARGUMENT_ITEM_MODEL, specificationEntry);
-        exerciseIntent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, ExercisingFragment.class.getName());
-        exerciseIntent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_DATA_INTENT, bundle);
+        exerciseIntent.putExtra(BaseFragmentActivity.Companion.getDUTY_FATE_FRAGMENT_INTENT(), ExercisingFragment.class.getName());
+        exerciseIntent.putExtra(BaseFragmentActivity.Companion.getDUTY_FATE_FRAGMENT_DATA_INTENT(), bundle);
+        context.startActivity(exerciseIntent);
+    }
+    private void gotoModify(TableVoiceSpecification.VoiceSpecificationEntry specificationEntry){
+        Intent exerciseIntent = new Intent(context, BaseFragmentActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(RecordingFragment.FRAGMENT_RECORDING_ARGUMENT_ITEM_MODEL, specificationEntry);
+        exerciseIntent.putExtra(BaseFragmentActivity.Companion.getDUTY_FATE_FRAGMENT_INTENT(), RecordingFragment.class.getName());
+        exerciseIntent.putExtra(BaseFragmentActivity.Companion.getDUTY_FATE_FRAGMENT_DATA_INTENT(), bundle);
         context.startActivity(exerciseIntent);
     }
 }

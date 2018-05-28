@@ -10,6 +10,8 @@
     <string name="button_go_to_homepage">跳转到首页</string>
     <string name="label_empty"> </string>
     <string name="label_exercise">练习</string>
+    <string name="label_exercise_supervise">监督学习</string>
+    <string name="label_exercise_examine">检查</string>
     <string name="label_record">录入</string>
     <string name="label_pressing_when_talking">按住说</string>
     <string name="label_title">声音名称</string>
@@ -17,6 +19,11 @@
     <string name="label_author">作者</string>
     <string name="label_save">保存</string>
     <string name="label_modify">修改</string>
+    <string name="label_self">我</string>
+    <string name="label_about">关于</string>
+    <string name="label_donate">捐助</string>
+    <string name="label_declaration">声明</string>
+    <string name="label_save_success">保存成功</string>
     <string name="menu_account_sign_up">注册</string>
     <string name="menu_exercise_to_record">@string/label_record</string>
     <string name="menu_to_select_language">选择语言</string>

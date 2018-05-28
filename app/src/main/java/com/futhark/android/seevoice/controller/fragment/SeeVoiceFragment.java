@@ -8,7 +8,6 @@ import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,7 +18,6 @@ import android.widget.ImageView;
 
 import com.futhark.android.seevoice.R;
 import com.futhark.android.seevoice.base.BaseFragment;
-import com.futhark.android.seevoice.model.domain.ExerciseItemModel;
 import com.futhark.android.seevoice.view.DisplayVoiceView;
 
 import java.util.Arrays;
@@ -34,16 +32,18 @@ import butterknife.ButterKnife;
 
 public class SeeVoiceFragment extends BaseFragment {
     public static final String FRAGMENT_EXERCISING_ARGUMENT_ITEM_MODEL = "fragment_exercising_argument_item_model";
-    public static SeeVoiceFragment newInstance(@NonNull  ExerciseItemModel itemModel){
+    public static SeeVoiceFragment newInstance(short[] initData){
         SeeVoiceFragment fragment = new SeeVoiceFragment();
-        Bundle arguments = new Bundle();
-        arguments.putSerializable(FRAGMENT_EXERCISING_ARGUMENT_ITEM_MODEL, itemModel);
-        fragment.setArguments(arguments);
+        if(initData != null) {
+            Bundle arguments = new Bundle();
+            arguments.putSerializable(FRAGMENT_EXERCISING_ARGUMENT_ITEM_MODEL, initData);
+            fragment.setArguments(arguments);
+        }
         return fragment;
     }
     private int recordDataSize = 0;
 
-    private ExerciseItemModel itemModel;
+    private short[] initData;
     @BindView(R.id.touch_pressing_when_talking)
     ImageView pressingWhenTalking;
     @BindView(R.id.display_exercising_voice)
@@ -61,7 +61,7 @@ public class SeeVoiceFragment extends BaseFragment {
         paint.setColor(Color.WHITE);
         if(arguments == null) return;
         if(arguments.containsKey(FRAGMENT_EXERCISING_ARGUMENT_ITEM_MODEL)){
-            this.itemModel = (ExerciseItemModel) arguments.getSerializable(FRAGMENT_EXERCISING_ARGUMENT_ITEM_MODEL);
+            this.initData = (short[]) arguments.getSerializable(FRAGMENT_EXERCISING_ARGUMENT_ITEM_MODEL);
         }
 
     }
@@ -75,6 +75,9 @@ public class SeeVoiceFragment extends BaseFragment {
         recordDataSize = AudioRecord.getMinBufferSize(32000, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT) * 2;
         this.displayVoiceController.onCreate();
         displayVoiceView.setDisplayVoiceController(this.displayVoiceController);
+        if(initData != null){
+            this.displayVoiceController.setVoiceRecord(initData);
+        }
         return view;
     }
 
@@ -104,13 +107,13 @@ public class SeeVoiceFragment extends BaseFragment {
                     displayVoiceController.clear();
                     audioRecord.startRecording();
                     isRecording = true;
-                    Log.d(TAG,"start to record");
+                    Log.d(Companion.getTAG(),"start to record");
                     break;
                 case MotionEvent.ACTION_CANCEL:
                 case MotionEvent.ACTION_UP:
                     if(audioRecord != null) audioRecord.stop();
                     isRecording = false;
-                    Log.d(TAG,"stop recording");
+                    Log.d(Companion.getTAG(),"stop recording");
                     break;
             }
             return true;
@@ -119,6 +122,7 @@ public class SeeVoiceFragment extends BaseFragment {
 
     interface SeeVoiceController extends DisplayVoiceView.DisplayVoiceController{
         short[] getLastVoiceRecord();
+        void setVoiceRecord(short[] voiceData);
     }
 
     private SeeVoiceController displayVoiceController = new SeeVoiceController() {
@@ -168,13 +172,13 @@ public class SeeVoiceFragment extends BaseFragment {
             int read = audioRecord.read(recordDisplayData, 0, recordDataSize);
             switch (read){
                 case AudioRecord.ERROR:
-                    Log.d(TAG," 不知道什么东西错了");
+                    Log.d(Companion.getTAG()," 不知道什么东西错了");
                     break;
                 case AudioRecord.ERROR_BAD_VALUE:
-                    Log.d(TAG, "数据格式有问题");
+                    Log.d(Companion.getTAG(), "数据格式有问题");
                     break;
                 case AudioRecord.ERROR_INVALID_OPERATION:
-                    Log.d(TAG, "操作不正确");
+                    Log.d(Companion.getTAG(), "操作不正确");
                     break;
                 default:
                     if(read > 0) {
@@ -203,6 +207,12 @@ public class SeeVoiceFragment extends BaseFragment {
         @Override
         public short[] getLastVoiceRecord() {
             return recordData;
+        }
+
+        @Override
+        public void setVoiceRecord(short[] voiceData) {
+            this.recordData = voiceData;
+            currentPosition = recordData.length;
         }
     };
 

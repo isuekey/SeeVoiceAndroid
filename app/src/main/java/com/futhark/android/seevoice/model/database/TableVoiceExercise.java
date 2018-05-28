@@ -12,15 +12,15 @@ import java.io.Serializable;
 import java.nio.ByteBuffer;
 
 /**
- * voice specification
- * Created by liuhr on 30/05/2017.
+ * voice exercise
+ * Created by liuhr on 01/06/2017.
  */
 
-public final class TableVoiceSpecification {
-    private TableVoiceSpecification(){}
+public class TableVoiceExercise {
+    private TableVoiceExercise(){}
 
-    private interface VoiceSpecification extends BaseColumns {
-        String TABLE_NAME= "voice_specification";
+    private interface VoiceExcercise extends BaseColumns {
+        String TABLE_NAME= "voice_exercise";
         String COLUMN_NAME_LOCALE = "locale_info";
         String COLUMN_NAME_TITLE = "title";
         String COLUMN_NAME_PHONETIC = "phonetic";
@@ -30,9 +30,11 @@ public final class TableVoiceSpecification {
         String COLUMN_NAME_ACCOUNT = "account";
         String COLUMN_NAME_MAX_VOLUME = "max_volume";
         String COLUMN_NAME_ORDER = "sort";
+        String COLUMN_NAME_SPECIFICATION_ID = "specification_id";
+        String COLUMN_NAME_SCORE = "exercise_score";
     }
 
-    public static class VoiceSpecificationEntry implements VoiceSpecification, Serializable{
+    public static class VoiceExcerciseEntry implements TableVoiceExercise.VoiceExcercise, Serializable {
         private Long id;
         private String title;
         private String phonetic;
@@ -40,7 +42,7 @@ public final class TableVoiceSpecification {
         private Integer maxVolume;
         private final short[] data;
 
-        public VoiceSpecificationEntry(Cursor cursor){
+        public VoiceExcerciseEntry(Cursor cursor){
             if(cursor == null || cursor.isClosed()){
                 this.data = null;
                 return;
@@ -112,41 +114,44 @@ public final class TableVoiceSpecification {
         String commaSep = ",";
         StringBuilder builder = new StringBuilder();
         builder.append("create table ");
-        builder.append(VoiceSpecificationEntry.TABLE_NAME).append(" ( ");
-        builder.append(VoiceSpecificationEntry._ID).append(" integer primary key,");
-        builder.append(VoiceSpecificationEntry.COLUMN_NAME_LOCALE).append(textType).append(commaSep);
-        builder.append(VoiceSpecificationEntry.COLUMN_NAME_TITLE).append(textType).append(commaSep);
-        builder.append(VoiceSpecificationEntry.COLUMN_NAME_PHONETIC).append(textType).append(commaSep);
-        builder.append(VoiceSpecificationEntry.COLUMN_NAME_DESCRIPTION).append(textType).append(commaSep);
-        builder.append(VoiceSpecificationEntry.COLUMN_NAME_AUTHOR).append(textType).append(commaSep);
-        builder.append(VoiceSpecificationEntry.COLUMN_NAME_ACCOUNT).append(textType).append(commaSep);
-        builder.append(VoiceSpecificationEntry.COLUMN_NAME_ORDER).append(" integer").append(commaSep);
-        builder.append(VoiceSpecificationEntry.COLUMN_NAME_MAX_VOLUME).append(" integer").append(commaSep);
-        builder.append(VoiceSpecificationEntry.COLUMN_NAME_DATA).append(" blob");
+        builder.append(VoiceExcerciseEntry.TABLE_NAME).append(" ( ");
+        builder.append(VoiceExcerciseEntry._ID).append(" integer primary key,");
+        builder.append(VoiceExcerciseEntry.COLUMN_NAME_LOCALE).append(textType).append(commaSep);
+        builder.append(VoiceExcerciseEntry.COLUMN_NAME_TITLE).append(textType).append(commaSep);
+        builder.append(VoiceExcerciseEntry.COLUMN_NAME_PHONETIC).append(textType).append(commaSep);
+        builder.append(VoiceExcerciseEntry.COLUMN_NAME_DESCRIPTION).append(textType).append(commaSep);
+        builder.append(VoiceExcerciseEntry.COLUMN_NAME_AUTHOR).append(textType).append(commaSep);
+        builder.append(VoiceExcerciseEntry.COLUMN_NAME_ACCOUNT).append(textType).append(commaSep);
+        builder.append(VoiceExcerciseEntry.COLUMN_NAME_ORDER).append(" integer").append(commaSep);
+        builder.append(VoiceExcerciseEntry.COLUMN_NAME_MAX_VOLUME).append(" integer").append(commaSep);
+        builder.append(VoiceExcerciseEntry.COLUMN_NAME_SPECIFICATION_ID).append(" integer").append(commaSep);
+        builder.append(VoiceExcerciseEntry.COLUMN_NAME_SCORE).append(" double").append(commaSep);
+        builder.append(VoiceExcerciseEntry.COLUMN_NAME_DATA).append(" blob");
         builder.append(" ) ");
         return builder.toString();
     }
 
     public static String dropTableSql(){
         StringBuilder builder = new StringBuilder();
-        builder.append("drop table if exists ").append(VoiceSpecificationEntry.TABLE_NAME);
+        builder.append("drop table if exists ").append(VoiceExcerciseEntry.TABLE_NAME);
         return builder.toString();
     }
 
     public static Uri tableUri(Context context){
-        return Uri.parse("content://"+context.getPackageName()+"/"+VoiceSpecificationEntry.TABLE_NAME);
+        return Uri.parse("content://"+context.getPackageName()+"/"+ VoiceExcerciseEntry.TABLE_NAME);
     }
 
     public static String[] COLUMNS = new String[]{
-            VoiceSpecificationEntry._ID,
-            VoiceSpecificationEntry.COLUMN_NAME_LOCALE,
-            VoiceSpecificationEntry.COLUMN_NAME_TITLE,
-            VoiceSpecificationEntry.COLUMN_NAME_PHONETIC,
-            VoiceSpecificationEntry.COLUMN_NAME_DESCRIPTION,
-            VoiceSpecificationEntry.COLUMN_NAME_AUTHOR,
-            VoiceSpecificationEntry.COLUMN_NAME_ACCOUNT,
-            VoiceSpecificationEntry.COLUMN_NAME_ORDER,
-            VoiceSpecificationEntry.COLUMN_NAME_MAX_VOLUME,
-            VoiceSpecificationEntry.COLUMN_NAME_DATA
+        VoiceExcerciseEntry._ID,
+        VoiceExcerciseEntry.COLUMN_NAME_LOCALE,
+        VoiceExcerciseEntry.COLUMN_NAME_TITLE,
+        VoiceExcerciseEntry.COLUMN_NAME_PHONETIC,
+        VoiceExcerciseEntry.COLUMN_NAME_DESCRIPTION,
+        VoiceExcerciseEntry.COLUMN_NAME_AUTHOR,
+        VoiceExcerciseEntry.COLUMN_NAME_ACCOUNT,
+        VoiceExcerciseEntry.COLUMN_NAME_ORDER,
+        VoiceExcerciseEntry.COLUMN_NAME_MAX_VOLUME,
+        VoiceExcerciseEntry.COLUMN_NAME_DATA
     };
+
 }
