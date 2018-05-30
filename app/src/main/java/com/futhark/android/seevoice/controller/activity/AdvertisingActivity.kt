@@ -10,7 +10,8 @@ import android.widget.Button
 import com.futhark.android.seevoice.R
 import com.futhark.android.seevoice.base.BaseActivity
 import com.futhark.android.seevoice.base.BaseFragmentActivity
-import com.futhark.android.seevoice.controller.fragment.HomePageFragment
+import com.futhark.android.seevoice.feature.home.HomePageFragment
+import com.futhark.android.seevoice.feature.home.HomeActivity
 
 /**
  * 启动广告页

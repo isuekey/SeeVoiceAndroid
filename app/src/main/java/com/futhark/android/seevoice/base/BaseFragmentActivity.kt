@@ -17,12 +17,10 @@ open class BaseFragmentActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fragment_base)
-        val activityIntent = intent
-        handleActivityIntent(activityIntent)
+        handleActivityIntent(intent)
     }
 
-    private fun handleActivityIntent(activityIntent: Intent?) {
-        if (activityIntent == null) return
+    private fun handleActivityIntent(activityIntent: Intent) {
         val fragmentName = activityIntent.getStringExtra(DUTY_FATE_FRAGMENT_INTENT) ?: return
         if (isContentChangeSeal && contentFragment != null) {
             return

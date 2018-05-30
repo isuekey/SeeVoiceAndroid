@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".controller.activity.HomeActivity"
+            android:name=".feature.home.HomeActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
             />

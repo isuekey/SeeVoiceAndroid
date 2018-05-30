@@ -1,4 +1,4 @@
-package com.futhark.android.seevoice.controller.activity
+package com.futhark.android.seevoice.feature.home
 
 import com.futhark.android.seevoice.base.BaseFragmentActivity
 

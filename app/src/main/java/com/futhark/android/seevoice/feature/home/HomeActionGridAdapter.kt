@@ -1,4 +1,4 @@
-package com.futhark.android.seevoice.controller.adapter
+package com.futhark.android.seevoice.feature.home
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -17,11 +17,7 @@ import com.futhark.android.seevoice.model.domain.ItemElement
  * Home action adapter
  */
 class HomeActionGridAdapter(context: Context) : ArrayAdapter<ItemElement>(context, 0) {
-    private val layoutInflater: LayoutInflater
-
-    init {
-        this.layoutInflater = LayoutInflater.from(context)
-    }
+    private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var v = convertView
@@ -39,19 +35,14 @@ class HomeActionGridAdapter(context: Context) : ArrayAdapter<ItemElement>(contex
 
 
     internal inner class ItemHolder(itemView: View) {
-        var itemIcon: ImageView? = null
-        var itemText: TextView? = null
+        private val itemIcon: ImageView = itemView.findViewById(R.id.img_home_action_icon)
+        private val itemText: TextView = itemView.findViewById(R.id.text_home_action_text)
         private var itemElement: ItemElement? = null
 
-        init {
-            itemText = itemView.findViewById(R.id.text_home_action_text)
-            itemIcon = itemView.findViewById(R.id.img_home_action_icon)
-        }
-
-        fun displayItem(itemElement: ItemElement?) {
+        fun displayItem(itemElement: ItemElement) {
             this.itemElement = itemElement
-            this.itemIcon!!.setImageResource(itemElement!!.src)
-            this.itemText!!.setText(itemElement.text)
+            this.itemIcon.setImageResource(itemElement.iconRes)
+            this.itemText.setText(itemElement.textRes)
         }
     }
 }
