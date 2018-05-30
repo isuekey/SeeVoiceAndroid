@@ -21,8 +21,6 @@ import com.futhark.android.seevoice.view.DisplayVoiceView
 
 import java.util.Arrays
 
-import butterknife.BindView
-import butterknife.ButterKnife
 
 /**
  * exercising fragment
@@ -33,9 +31,7 @@ class SeeVoiceFragment : BaseFragment() {
     private var recordDataSize = 0
 
     private var initData: ShortArray? = null
-    @BindView(R.id.touch_pressing_when_talking)
     internal var pressingWhenTalking: ImageView? = null
-    @BindView(R.id.display_exercising_voice)
     internal var displayVoiceView: DisplayVoiceView? = null
 
     private var audioRecord: AudioRecord? = null
@@ -60,8 +56,7 @@ class SeeVoiceFragment : BaseFragment() {
     }
 
     private val displayVoiceController = object : SeeVoiceController {
-        override var lastVoiceRecord: ShortArray? = null
-            private set
+        var lastVoiceRecord: ShortArray? = null
         private var recordDisplayData: ShortArray? = null
         private var displayData: FloatArray? = null
         private val empty: Short = 0
@@ -91,10 +86,10 @@ class SeeVoiceFragment : BaseFragment() {
                 endX = index * dotWidth
                 endY = lastVoiceRecord!![index].toFloat() * dotHeight * zoom + verticalCenter
                 displayIndex = index * 4
-                displayData[displayIndex] = startX
-                displayData[displayIndex + 1] = startY
-                displayData[displayIndex + 2] = endX
-                displayData[displayIndex + 3] = endY
+                displayData!![displayIndex] = startX
+                displayData!![displayIndex + 1] = startY
+                displayData!![displayIndex + 2] = endX
+                displayData!![displayIndex + 3] = endY
                 startX = endX
                 startY = endY
             }
@@ -151,13 +146,14 @@ class SeeVoiceFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle): View? {
         val view = inflater.inflate(R.layout.fragment_see_voice, container, false)
-        ButterKnife.bind(this, view)
+        pressingWhenTalking = view.findViewById(R.id.touch_pressing_when_talking)
+        displayVoiceView = view.findViewById(R.id.display_exercising_voice)
         pressingWhenTalking!!.setOnTouchListener(this.onTouchListener)
         recordDataSize = AudioRecord.getMinBufferSize(32000, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT) * 2
         this.displayVoiceController.onCreate()
         displayVoiceView!!.displayVoiceController = this.displayVoiceController
-        if (initData != null) {
-            this.displayVoiceController.setVoiceRecord(initData)
+        if (this.initData != null) {
+            this.displayVoiceController.setVoiceRecord(initData!!)
         }
         return view
     }
@@ -179,7 +175,6 @@ class SeeVoiceFragment : BaseFragment() {
     }
 
     internal interface SeeVoiceController : DisplayVoiceView.DisplayVoiceController {
-        val lastVoiceRecord: ShortArray
         fun setVoiceRecord(voiceData: ShortArray)
     }
 

@@ -16,8 +16,6 @@ import com.futhark.android.seevoice.model.domain.ItemElement
 
 import java.util.ArrayList
 
-import butterknife.BindView
-import butterknife.ButterKnife
 
 /**
  * 首页的内容
@@ -25,7 +23,6 @@ import butterknife.ButterKnife
  */
 
 class HomePageFragment : BaseFragment() {
-    @BindView(R.id.home_action_grid_container)
     internal var actionContainer: GridView? = null
     private var gridAdapter: HomeActionGridAdapter? = null
     private val itemElementArrayList = ArrayList<ItemElement>()
@@ -64,7 +61,7 @@ class HomePageFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle): View? {
         val fragmentView = inflater.inflate(R.layout.fragment_home_page, container, false)
-        ButterKnife.bind(this, fragmentView)
+        actionContainer = fragmentView.findViewById(R.id.home_action_grid_container)
         actionContainer!!.onItemClickListener = onItemClickListener
         return fragmentView
     }

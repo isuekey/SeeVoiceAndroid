@@ -22,9 +22,6 @@ import com.futhark.android.seevoice.view.DisplayVoiceView
 
 import java.util.Arrays
 
-import butterknife.BindView
-import butterknife.ButterKnife
-
 /**
  * exercising fragment
  * Created by liuhr on 07/04/2017.
@@ -34,11 +31,8 @@ class ExercisingFragment : BaseFragment() {
     private var recordDataSize = 0
 
     private var itemModel: TableVoiceSpecification.VoiceSpecificationEntry? = null
-    @BindView(R.id.touch_pressing_when_talking)
     internal var pressingWhenTalking: ImageView? = null
-    @BindView(R.id.display_exercising_voice)
     internal var displayVoiceView: DisplayVoiceView? = null
-    @BindView(R.id.display_voice_specification)
     internal var specificationVoiceView: DisplayVoiceView? = null
 
     private var audioRecord: AudioRecord? = null
@@ -96,10 +90,10 @@ class ExercisingFragment : BaseFragment() {
                 endX = index * dotWidth
                 endY = recordData!![index].toFloat() * dotHeight * zoom + verticalCenter
                 displayIndex = index * 4
-                displayData.set(displayIndex, startX)
-                displayData.set(displayIndex+1, startY)
-                displayData.set(displayIndex+2, endX)
-                displayData.set(displayIndex+3, endY)
+                displayData!![displayIndex] = startX
+                displayData!![displayIndex+1] = startY
+                displayData!![displayIndex+2] = endX
+                displayData!![displayIndex+3] = endY
                 startX = endX
                 startY = endY
             }
@@ -150,10 +144,10 @@ class ExercisingFragment : BaseFragment() {
                 endX = index * dotWidth
                 endY = recordData!![index].toFloat() * dotHeight * zoom + verticalCenter
                 displayIndex = index * 4
-                displayData[displayIndex] = startX
-                displayData[displayIndex + 1] = startY
-                displayData[displayIndex + 2] = endX
-                displayData[displayIndex + 3] = endY
+                displayData!![displayIndex] = startX
+                displayData!![displayIndex+1] = startY
+                displayData!![displayIndex+2] = endX
+                displayData!![displayIndex+3] = endY
                 startX = endX
                 startY = endY
             }
@@ -203,7 +197,14 @@ class ExercisingFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle): View? {
         val view = inflater.inflate(R.layout.fragment_exercising, container, false)
-        ButterKnife.bind(this, view)
+        initHandler(view)
+        return view
+    }
+
+    fun initHandler(fragmentView:View) {
+        pressingWhenTalking = fragmentView.findViewById(R.id.touch_pressing_when_talking)
+        displayVoiceView = fragmentView.findViewById(R.id.display_exercising_voice)
+        specificationVoiceView = fragmentView.findViewById(R.id.display_voice_specification)
         pressingWhenTalking!!.setOnTouchListener(this.onTouchListener)
         recordDataSize = AudioRecord.getMinBufferSize(32000, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT) * 2
         this.displayVoiceController.onCreate()
@@ -213,7 +214,6 @@ class ExercisingFragment : BaseFragment() {
         } else {
             specificationVoiceView!!.displayVoiceController = this.specificationController
         }
-        return view
     }
 
     override fun onStart() {

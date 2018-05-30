@@ -11,8 +11,6 @@ import android.widget.TextView
 import com.futhark.android.seevoice.R
 import com.futhark.android.seevoice.model.domain.ItemElement
 
-import butterknife.BindView
-import butterknife.ButterKnife
 
 
 /**
@@ -41,14 +39,13 @@ class HomeActionGridAdapter(context: Context) : ArrayAdapter<ItemElement>(contex
 
 
     internal inner class ItemHolder(itemView: View) {
-        @BindView(R.id.img_home_action_icon)
         var itemIcon: ImageView? = null
-        @BindView(R.id.text_home_action_text)
         var itemText: TextView? = null
         private var itemElement: ItemElement? = null
 
         init {
-            ButterKnife.bind(this, itemView)
+            itemText = itemView.findViewById(R.id.text_home_action_text)
+            itemIcon = itemView.findViewById(R.id.img_home_action_icon)
         }
 
         fun displayItem(itemElement: ItemElement?) {

@@ -19,8 +19,6 @@ import com.futhark.android.seevoice.controller.adapter.SpecificationListAdapter
 import com.futhark.android.seevoice.model.database.SeeVoiceSqliteDatabaseHelper
 import com.futhark.android.seevoice.model.database.TableVoiceSpecification
 
-import butterknife.BindView
-import butterknife.ButterKnife
 
 /**
  * list specification
@@ -28,7 +26,6 @@ import butterknife.ButterKnife
  */
 
 class SpecificationListFragment : BaseFragment() {
-    @BindView(R.id.fragment_empty_list_view)
     internal var specificationListView: ListView? = null
 
     private var listAdapter: SpecificationListAdapter? = null
@@ -42,7 +39,7 @@ class SpecificationListFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle): View? {
         val fragment = inflater.inflate(R.layout.fragment_empty_list, container, false)
-        ButterKnife.bind(this, fragment)
+        specificationListView = fragment.findViewById(R.id.fragment_empty_list_view)
         return fragment
     }
 
@@ -70,7 +67,7 @@ class SpecificationListFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        cursor = database!!.query(TableVoiceSpecification.VoiceSpecificationEntry.TABLE_NAME,
+        cursor = database!!.query(TableVoiceSpecification.VoiceSpecification.TABLE_NAME,
                 TableVoiceSpecification.COLUMNS, null, null, null, null, null)
         if (cursor != null) {
             cursor!!.moveToFirst()

@@ -9,9 +9,6 @@ import android.widget.TextView
 
 import com.futhark.android.seevoice.R
 
-import butterknife.BindView
-import butterknife.ButterKnife
-
 /**
  * exercise list adapter
  * Created by liuhr on 06/04/2017.
@@ -32,18 +29,17 @@ class ExerciseListAdapter<T : ExerciseListAdapter.ExerciseItemInterface>(context
             holder = ExerciseItemHolder(v)
             v!!.tag = holder
         } else {
-            holder = v.tag as ExerciseItemHolder
+            holder = v.tag as ExerciseListAdapter<T>.ExerciseItemHolder
         }
         holder.setDataToDisplay(getItem(position))
         return v
     }
 
     internal inner class ExerciseItemHolder(itemView: View) {
-        @BindView(R.id.item_of_exercise_list_title)
         var titleText: TextView? = null
 
         init {
-            ButterKnife.bind(this, itemView)
+            titleText = itemView.findViewById(R.id.item_of_exercise_list_title)
         }
 
         fun setDataToDisplay(data: T?) {
@@ -52,6 +48,6 @@ class ExerciseListAdapter<T : ExerciseListAdapter.ExerciseItemInterface>(context
     }
 
     interface ExerciseItemInterface {
-        val title: String
+        var title: String?
     }
 }

@@ -12,12 +12,12 @@ import android.widget.Toast
 import com.futhark.android.seevoice.R
 import com.futhark.android.seevoice.base.BaseFragment
 import com.futhark.android.seevoice.model.database.SeeVoiceSqliteDatabaseHelper
+import com.futhark.android.seevoice.model.database.TableVoiceSpecification.VoiceSpecification
 import com.futhark.android.seevoice.model.database.TableVoiceSpecification.VoiceSpecificationEntry
 
 import java.nio.ByteBuffer
 
-import butterknife.BindView
-import butterknife.ButterKnife
+import com.futhark.android.seevoice.model.database.TableVoiceSpecification
 
 /**
  * record fragment
@@ -25,10 +25,10 @@ import butterknife.ButterKnife
  */
 
 class RecordingFragment : BaseFragment() {
-    @BindView(R.id.button_save_record) internal var buttonSave: View? = null
-    @BindView(R.id.edit_voice_title) internal var titleEdit: EditText? = null
-    @BindView(R.id.edit_voice_phonetic) internal var phoneticEdit: EditText? = null
-    @BindView(R.id.edit_voice_author) internal var authorEdit: EditText? = null
+    internal var buttonSave: View? = null
+    internal var titleEdit: EditText? = null
+    internal var phoneticEdit: EditText? = null
+    internal var authorEdit: EditText? = null
 
     private var database: SQLiteDatabase? = null
     private var seeVoiceFragment: SeeVoiceFragment? = null
@@ -53,8 +53,10 @@ class RecordingFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle): View? {
         val fragment = inflater.inflate(R.layout.fragment_recording, container, false)
-        ButterKnife.bind(this, fragment)
-        buttonSave!!.setOnClickListener(onClickListener)
+        buttonSave = fragment.findViewById(R.id.button_save_record)
+        titleEdit = fragment.findViewById(R.id.edit_voice_title)
+        phoneticEdit = fragment.findViewById(R.id.edit_voice_phonetic)
+        authorEdit = fragment.findViewById(R.id.edit_voice_author)
         return fragment
     }
 
@@ -88,19 +90,19 @@ class RecordingFragment : BaseFragment() {
             index++
         }
         val values = ContentValues()
-        values.put(VoiceSpecificationEntry.COLUMN_NAME_TITLE, title)
-        values.put(VoiceSpecificationEntry.COLUMN_NAME_PHONETIC, phonetic)
-        values.put(VoiceSpecificationEntry.COLUMN_NAME_AUTHOR, author)
-        values.put(VoiceSpecificationEntry.COLUMN_NAME_DATA, byteBuffer.array())
+        values.put(VoiceSpecification.COLUMN_NAME_TITLE, title)
+        values.put(VoiceSpecification.COLUMN_NAME_PHONETIC, phonetic)
+        values.put(VoiceSpecification.COLUMN_NAME_AUTHOR, author)
+        values.put(VoiceSpecification.COLUMN_NAME_DATA, byteBuffer.array())
         if (voiceSpecificationEntry != null) {
-            val rows = database!!.update(VoiceSpecificationEntry.TABLE_NAME, values, VoiceSpecificationEntry._ID + "= ?", arrayOf(voiceSpecificationEntry!!.id!!.toString()))
+            val rows = database!!.update(VoiceSpecification.TABLE_NAME, values, VoiceSpecification._ID + "= ?", arrayOf(voiceSpecificationEntry!!.id!!.toString()))
             return if (rows > 0) {
                 voiceSpecificationEntry!!.id!!
             } else {
                 -1L
             }
         } else {
-            return database!!.insert(VoiceSpecificationEntry.TABLE_NAME, null, values)
+            return database!!.insert(VoiceSpecification.TABLE_NAME, null, values)
         }
     }
 

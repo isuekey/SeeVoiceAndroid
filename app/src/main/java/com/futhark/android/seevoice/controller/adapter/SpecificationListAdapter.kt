@@ -24,7 +24,7 @@ import com.futhark.android.seevoice.model.database.TableVoiceSpecification
 class SpecificationListAdapter : CursorAdapter {
     private var layoutInflater: LayoutInflater? = null
     private var context: Context? = null
-    private val showRecord = true
+    private var showRecord = true
 
     constructor(context: Context, c: Cursor, autoRequery: Boolean) : super(context, c, autoRequery) {
         this.context = context
@@ -48,7 +48,7 @@ class SpecificationListAdapter : CursorAdapter {
         itemHolder?.display(cursor)
     }
 
-    private inner class ItemHolder private constructor(private val itemView: View) {
+    private inner class ItemHolder constructor(private val itemView: View) {
         private val titleView: TextView
         private val phoneticView: TextView
         private val authorView: TextView
@@ -76,9 +76,9 @@ class SpecificationListAdapter : CursorAdapter {
         }
 
         fun display(cursor: Cursor) {
-            titleView.text = cursor.getString(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecificationEntry.COLUMN_NAME_TITLE))
-            phoneticView.text = cursor.getString(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecificationEntry.COLUMN_NAME_PHONETIC))
-            authorView.text = cursor.getString(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecificationEntry.COLUMN_NAME_AUTHOR))
+            titleView.text = cursor.getString(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecification.COLUMN_NAME_TITLE))
+            phoneticView.text = cursor.getString(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecification.COLUMN_NAME_PHONETIC))
+            authorView.text = cursor.getString(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecification.COLUMN_NAME_AUTHOR))
             voiceSpecificationEntry = TableVoiceSpecification.VoiceSpecificationEntry(cursor)
         }
     }

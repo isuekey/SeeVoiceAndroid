@@ -30,10 +30,7 @@ dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     implementation 'org.greenrobot:eventbus:3.0.0'
-    implementation 'com.jakewharton:butterknife:8.0.1'
-    implementation 'com.jakewharton:butterknife-compiler:8.0.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:support-annotations:27.1.1'
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 repositories {
