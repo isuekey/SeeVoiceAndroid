@@ -55,7 +55,7 @@ public class TableVoiceExercise {
             byte[] data = cursor.getBlob(cursor.getColumnIndex(COLUMN_NAME_DATA));
             ByteBuffer buffer = ByteBuffer.wrap(data);
             int size = data == null ? 0 : data.length / 2;
-            Log.d(AppConstant.TAG, "voice size:"+size);
+            Log.d(AppConstant.Companion.getTAG(), "voice size:"+size);
             this.data = new short[size];
             int index = 0;
             while(size > index){
