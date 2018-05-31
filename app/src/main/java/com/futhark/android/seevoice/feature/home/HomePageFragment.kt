@@ -13,7 +13,7 @@ import com.futhark.android.seevoice.base.BaseFragment
 import com.futhark.android.seevoice.base.BaseFragmentActivity
 import com.futhark.android.seevoice.controller.fragment.ExercisingFragment
 import com.futhark.android.seevoice.controller.fragment.MeFragment
-import com.futhark.android.seevoice.controller.fragment.SpecificationListFragment
+import com.futhark.android.seevoice.feature.record.SpecificationListFragment
 import com.futhark.android.seevoice.controller.fragment.SupervisingListFragment
 import com.futhark.android.seevoice.model.domain.ItemElement
 
