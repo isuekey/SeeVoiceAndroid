@@ -5,8 +5,6 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +13,7 @@ import android.widget.ListView
 import com.futhark.android.seevoice.R
 import com.futhark.android.seevoice.base.BaseFragment
 import com.futhark.android.seevoice.base.BaseFragmentActivity
-import com.futhark.android.seevoice.controller.adapter.SpecificationListAdapter
+import com.futhark.android.seevoice.feature.record.SpecificationListAdapter
 import com.futhark.android.seevoice.model.database.SeeVoiceSqliteDatabaseHelper
 import com.futhark.android.seevoice.model.database.TableVoiceSpecification
 

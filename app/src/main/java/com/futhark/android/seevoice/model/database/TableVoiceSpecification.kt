@@ -18,87 +18,87 @@ import java.nio.ByteBuffer
 
 object TableVoiceSpecification {
 
-    var COLUMNS = arrayOf<String>(VoiceSpecification._ID, VoiceSpecification.COLUMN_NAME_LOCALE,
-            VoiceSpecification.COLUMN_NAME_TITLE, VoiceSpecification.COLUMN_NAME_PHONETIC,
-            VoiceSpecification.COLUMN_NAME_DESCRIPTION, VoiceSpecification.COLUMN_NAME_AUTHOR,
-            VoiceSpecification.COLUMN_NAME_ACCOUNT, VoiceSpecification.COLUMN_NAME_ORDER,
-            VoiceSpecification.COLUMN_NAME_MAX_VOLUME, VoiceSpecification.COLUMN_NAME_DATA)
+  var COLUMNS = arrayOf<String>(VoiceSpecification._ID, VoiceSpecification.COLUMN_NAME_LOCALE,
+      VoiceSpecification.COLUMN_NAME_TITLE, VoiceSpecification.COLUMN_NAME_PHONETIC,
+      VoiceSpecification.COLUMN_NAME_DESCRIPTION, VoiceSpecification.COLUMN_NAME_AUTHOR,
+      VoiceSpecification.COLUMN_NAME_ACCOUNT, VoiceSpecification.COLUMN_NAME_ORDER,
+      VoiceSpecification.COLUMN_NAME_MAX_VOLUME, VoiceSpecification.COLUMN_NAME_DATA)
 
-    interface VoiceSpecification {
-        companion object {
-            val TABLE_NAME = "voice_specification"
-            val COLUMN_NAME_LOCALE = "locale_info"
-            val COLUMN_NAME_TITLE = "title"
-            val COLUMN_NAME_PHONETIC = "phonetic"
-            val COLUMN_NAME_DESCRIPTION = "description"
-            val COLUMN_NAME_DATA = "voice_data"
-            val COLUMN_NAME_AUTHOR = "author"
-            val COLUMN_NAME_ACCOUNT = "account"
-            val COLUMN_NAME_MAX_VOLUME = "max_volume"
-            val COLUMN_NAME_ORDER = "sort"
-            val _ID = BaseColumns._ID
-            val _COUNT = BaseColumns._COUNT
+  interface VoiceSpecification {
+    companion object {
+      val TABLE_NAME = "voice_specification"
+      val COLUMN_NAME_LOCALE = "locale_info"
+      val COLUMN_NAME_TITLE = "title"
+      val COLUMN_NAME_PHONETIC = "phonetic"
+      val COLUMN_NAME_DESCRIPTION = "description"
+      val COLUMN_NAME_DATA = "voice_data"
+      val COLUMN_NAME_AUTHOR = "author"
+      val COLUMN_NAME_ACCOUNT = "account"
+      val COLUMN_NAME_MAX_VOLUME = "max_volume"
+      val COLUMN_NAME_ORDER = "sort"
+      val _ID = BaseColumns._ID
+      val _COUNT = BaseColumns._COUNT
+    }
+  }
+
+  class VoiceSpecificationEntry(cursor: Cursor?) : VoiceSpecification, Serializable {
+    var id: Long? = null
+    var title: String? = null
+    var phonetic: String? = null
+    var author: String? = null
+    var maxVolume: Int? = null
+    var data: ShortArray?
+
+    init {
+      if (cursor == null || cursor.isClosed) {
+        this.data = null
+      } else {
+        this.id = cursor!!.getLong(cursor.getColumnIndex(VoiceSpecification._ID))
+        this.title = cursor.getString(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecification.COLUMN_NAME_TITLE))
+        this.phonetic = cursor.getString(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecification.COLUMN_NAME_PHONETIC))
+        this.author = cursor.getString(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecification.COLUMN_NAME_AUTHOR))
+        this.maxVolume = cursor.getInt(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecification.COLUMN_NAME_MAX_VOLUME))
+        val data = cursor.getBlob(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecification.COLUMN_NAME_DATA))
+        val buffer = ByteBuffer.wrap(data)
+        val size = if (data == null) 0 else data.size / 2
+        Log.d(AppConstant.TAG, "voice size:" + size)
+        this.data = ShortArray(size)
+        var index = 0
+        while (size > index) {
+          this.data!![index] = buffer.getShort(index * 2)
+          index++
         }
+      }
     }
+  }
 
-    class VoiceSpecificationEntry(cursor: Cursor?) : VoiceSpecification, Serializable {
-        var id: Long? = null
-        var title: String? = null
-        var phonetic: String? = null
-        var author: String? = null
-        var maxVolume: Int? = null
-        var data: ShortArray?
+  fun createTableSql(): String {
+    val textType = " text"
+    val commaSep = ","
+    val builder = StringBuilder()
+    builder.append("create table ")
+    builder.append(VoiceSpecification.TABLE_NAME).append(" ( ")
+    builder.append(VoiceSpecification._ID).append(" integer primary key,")
+    builder.append(VoiceSpecification.COLUMN_NAME_LOCALE).append(textType).append(commaSep)
+    builder.append(VoiceSpecification.COLUMN_NAME_TITLE).append(textType).append(commaSep)
+    builder.append(VoiceSpecification.COLUMN_NAME_PHONETIC).append(textType).append(commaSep)
+    builder.append(VoiceSpecification.COLUMN_NAME_DESCRIPTION).append(textType).append(commaSep)
+    builder.append(VoiceSpecification.COLUMN_NAME_AUTHOR).append(textType).append(commaSep)
+    builder.append(VoiceSpecification.COLUMN_NAME_ACCOUNT).append(textType).append(commaSep)
+    builder.append(VoiceSpecification.COLUMN_NAME_ORDER).append(" integer").append(commaSep)
+    builder.append(VoiceSpecification.COLUMN_NAME_MAX_VOLUME).append(" integer").append(commaSep)
+    builder.append(VoiceSpecification.COLUMN_NAME_DATA).append(" blob")
+    builder.append(" ) ")
+    return builder.toString()
+  }
 
-        init {
-            if (cursor == null || cursor.isClosed) {
-                this.data = null
-            } else {
-                this.id = cursor!!.getLong(cursor.getColumnIndex(VoiceSpecification._ID))
-                this.title = cursor.getString(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecification.COLUMN_NAME_TITLE))
-                this.phonetic = cursor.getString(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecification.COLUMN_NAME_PHONETIC))
-                this.author = cursor.getString(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecification.COLUMN_NAME_AUTHOR))
-                this.maxVolume = cursor.getInt(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecification.COLUMN_NAME_MAX_VOLUME))
-                val data = cursor.getBlob(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecification.COLUMN_NAME_DATA))
-                val buffer = ByteBuffer.wrap(data)
-                val size = if (data == null) 0 else data.size / 2
-                Log.d(AppConstant.TAG, "voice size:" + size)
-                this.data = ShortArray(size)
-                var index = 0
-                while (size > index) {
-                    this.data!![index] = buffer.getShort(index * 2)
-                    index++
-                }
-            }
-        }
-    }
+  fun dropTableSql(): String {
+    val builder = StringBuilder()
+    builder.append("drop table if exists ").append(VoiceSpecification.TABLE_NAME)
+    return builder.toString()
+  }
 
-    fun createTableSql(): String {
-        val textType = " text"
-        val commaSep = ","
-        val builder = StringBuilder()
-        builder.append("create table ")
-        builder.append(VoiceSpecification.TABLE_NAME).append(" ( ")
-        builder.append(VoiceSpecification._ID).append(" integer primary key,")
-        builder.append(VoiceSpecification.COLUMN_NAME_LOCALE).append(textType).append(commaSep)
-        builder.append(VoiceSpecification.COLUMN_NAME_TITLE).append(textType).append(commaSep)
-        builder.append(VoiceSpecification.COLUMN_NAME_PHONETIC).append(textType).append(commaSep)
-        builder.append(VoiceSpecification.COLUMN_NAME_DESCRIPTION).append(textType).append(commaSep)
-        builder.append(VoiceSpecification.COLUMN_NAME_AUTHOR).append(textType).append(commaSep)
-        builder.append(VoiceSpecification.COLUMN_NAME_ACCOUNT).append(textType).append(commaSep)
-        builder.append(VoiceSpecification.COLUMN_NAME_ORDER).append(" integer").append(commaSep)
-        builder.append(VoiceSpecification.COLUMN_NAME_MAX_VOLUME).append(" integer").append(commaSep)
-        builder.append(VoiceSpecification.COLUMN_NAME_DATA).append(" blob")
-        builder.append(" ) ")
-        return builder.toString()
-    }
-
-    fun dropTableSql(): String {
-        val builder = StringBuilder()
-        builder.append("drop table if exists ").append(VoiceSpecification.TABLE_NAME)
-        return builder.toString()
-    }
-
-    fun tableUri(context: Context): Uri {
-        return Uri.parse("content://" + context.packageName + "/" + VoiceSpecification.TABLE_NAME)
-    }
+  fun tableUri(context: Context): Uri {
+    return Uri.parse("content://" + context.packageName + "/" + VoiceSpecification.TABLE_NAME)
+  }
 }

@@ -15,7 +15,6 @@ import android.widget.ListView
 import com.futhark.android.seevoice.R
 import com.futhark.android.seevoice.base.BaseFragment
 import com.futhark.android.seevoice.base.BaseFragmentActivity
-import com.futhark.android.seevoice.controller.adapter.SpecificationListAdapter
 import com.futhark.android.seevoice.controller.fragment.RecordingFragment
 import com.futhark.android.seevoice.model.database.SeeVoiceSqliteDatabaseHelper
 import com.futhark.android.seevoice.model.database.TableVoiceSpecification
@@ -39,14 +38,13 @@ class SpecificationListFragment : BaseFragment() {
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle): View? {
-    val fragment = inflater.inflate(R.layout.fragment_empty_list, container, false)
-    specificationListView = fragment.findViewById(R.id.fragment_empty_list_view)
-    return fragment
+    return inflater.inflate(R.layout.fragment_empty_list, container, false)
   }
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
-    listAdapter = SpecificationListAdapter(activity, null!!, true)
+    specificationListView = view.findViewById(R.id.fragment_empty_list_view)
+    listAdapter = SpecificationListAdapter(activity, null, true, true)
     specificationListView!!.adapter = listAdapter
     database = SeeVoiceSqliteDatabaseHelper(activity).readableDatabase
   }

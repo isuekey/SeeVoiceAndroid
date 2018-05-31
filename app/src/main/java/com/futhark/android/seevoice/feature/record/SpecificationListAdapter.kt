@@ -1,4 +1,4 @@
-package com.futhark.android.seevoice.controller.adapter
+package com.futhark.android.seevoice.feature.record
 
 import android.content.Context
 import android.content.Intent
@@ -24,14 +24,9 @@ import com.futhark.android.seevoice.model.database.TableVoiceSpecification
 class SpecificationListAdapter : CursorAdapter {
   private var layoutInflater: LayoutInflater? = null
   private var context: Context? = null
-  private var showRecord = true
+  private val showRecord: Boolean
 
-  constructor(context: Context, c: Cursor, autoRequery: Boolean) : super(context, c, autoRequery) {
-    this.context = context
-    layoutInflater = LayoutInflater.from(context)
-  }
-
-  constructor(context: Context, c: Cursor, autoRequery: Boolean, showRecord: Boolean) : super(context, c, autoRequery) {
+  constructor(context: Context, c: Cursor?, autoRequery: Boolean, showRecord: Boolean) : super(context, c, autoRequery) {
     this.context = context
     layoutInflater = LayoutInflater.from(context)
     this.showRecord = showRecord
@@ -49,30 +44,23 @@ class SpecificationListAdapter : CursorAdapter {
   }
 
   private inner class ItemHolder constructor(private val itemView: View) {
-    private val titleView: TextView
-    private val phoneticView: TextView
-    private val authorView: TextView
-    private val modifyBuffton: View
+    private val titleView: TextView = itemView.findViewById(R.id.text_specification_title)
+    private val phoneticView: TextView = itemView.findViewById(R.id.text_specification_phonetic)
+    private val authorView: TextView = itemView.findViewById(R.id.text_specification_author)
+    private val modifyButton: View = itemView.findViewById(R.id.button_to_modify)
+    private val exerciseButton: View = itemView.findViewById(R.id.button_to_exercise)
     private var voiceSpecificationEntry: TableVoiceSpecification.VoiceSpecificationEntry? = null
 
-    private val onClickListener = View.OnClickListener { v ->
-      when (v.id) {
-        R.id.button_to_modify -> gotoModify(voiceSpecificationEntry)
-        R.id.button_to_exercise -> gotoExercise(voiceSpecificationEntry)
-      }
-    }
-
     init {
-      titleView = itemView.findViewById<View>(R.id.text_specification_title) as TextView
-      phoneticView = itemView.findViewById<View>(R.id.text_specification_phonetic) as TextView
-      authorView = itemView.findViewById<View>(R.id.text_specification_author) as TextView
-      itemView.findViewById<View>(R.id.button_to_exercise).setOnClickListener(onClickListener)
-      modifyBuffton = itemView.findViewById(R.id.button_to_modify)
-      if (!showRecord) {
-        modifyBuffton.visibility = View.INVISIBLE
-      } else {
-        modifyBuffton.setOnClickListener(onClickListener)
+      val onClickListener = View.OnClickListener { v ->
+        when (v.id) {
+          R.id.button_to_modify -> gotoModify(voiceSpecificationEntry)
+          R.id.button_to_exercise -> gotoExercise(voiceSpecificationEntry)
+        }
       }
+      exerciseButton.setOnClickListener(onClickListener)
+      modifyButton.setOnClickListener(onClickListener)
+      modifyButton.visibility = if (!showRecord) View.INVISIBLE else View.VISIBLE
     }
 
     fun display(cursor: Cursor) {
