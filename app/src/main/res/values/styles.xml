@@ -1,24 +1,25 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Material">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlHighlight">@color/colorAccent</item>
-    </style>
+  <!-- Base application theme. -->
+  <style name="AppTheme" parent="android:Theme.Material">
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="colorControlHighlight">@color/colorAccent</item>
+  </style>
 
-    <style name="homeBlockContainer">
-        <item name="android:paddingTop">@dimen/element_vertical_padding</item>
-        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
-        <item name="android:paddingBottom">@dimen/element_vertical_padding</item>
-        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
-        <item name="android:gravity">center_horizontal</item>
-    </style>
-    <style name="homeBlockContent">
-        <item name="android:textSize">@dimen/text_title_huge</item>
-        <item name="android:textColor">@android:color/holo_blue_light</item>
-    </style>
+  <style name="homeBlockContainer">
+    <item name="android:paddingTop">@dimen/element_vertical_padding</item>
+    <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+    <item name="android:paddingBottom">@dimen/element_vertical_padding</item>
+    <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+    <item name="android:gravity">center_horizontal</item>
+  </style>
+
+  <style name="homeBlockContent">
+    <item name="android:textSize">@dimen/text_title_huge</item>
+    <item name="android:textColor">@android:color/holo_blue_light</item>
+  </style>
 
 </resources>
