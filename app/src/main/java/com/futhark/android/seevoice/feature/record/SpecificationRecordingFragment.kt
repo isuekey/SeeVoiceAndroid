@@ -1,4 +1,4 @@
-package com.futhark.android.seevoice.controller.fragment
+package com.futhark.android.seevoice.feature.record
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
@@ -17,18 +17,16 @@ import com.futhark.android.seevoice.model.database.TableVoiceSpecification.Voice
 
 import java.nio.ByteBuffer
 
-import com.futhark.android.seevoice.model.database.TableVoiceSpecification
-
 /**
  * record fragment
  * Created by liuhr on 31/05/2017.
  */
 
-class RecordingFragment : BaseFragment() {
-    internal var buttonSave: View? = null
-    internal var titleEdit: EditText? = null
-    internal var phoneticEdit: EditText? = null
-    internal var authorEdit: EditText? = null
+class SpecificationRecordingFragment : BaseFragment() {
+    private var buttonSave: View? = null
+    private var titleEdit: EditText? = null
+    private var phoneticEdit: EditText? = null
+    private var authorEdit: EditText? = null
 
     private var database: SQLiteDatabase? = null
     private var seeVoiceFragment: SeeVoiceFragment? = null
@@ -107,7 +105,6 @@ class RecordingFragment : BaseFragment() {
     }
 
     companion object {
-
         val FRAGMENT_RECORDING_ARGUMENT_ITEM_MODEL = "fragment_recording_arugment_item_model"
     }
 }

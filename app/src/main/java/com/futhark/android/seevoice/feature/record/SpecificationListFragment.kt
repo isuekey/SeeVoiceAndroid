@@ -15,7 +15,6 @@ import android.widget.ListView
 import com.futhark.android.seevoice.R
 import com.futhark.android.seevoice.base.BaseFragment
 import com.futhark.android.seevoice.base.BaseFragmentActivity
-import com.futhark.android.seevoice.controller.fragment.RecordingFragment
 import com.futhark.android.seevoice.model.database.SeeVoiceSqliteDatabaseHelper
 import com.futhark.android.seevoice.model.database.TableVoiceSpecification
 
@@ -84,7 +83,7 @@ class SpecificationListFragment : BaseFragment() {
 
   private fun gotoRecordSpecification() {
     val goToRecordActivityIntent = Intent(activity, BaseFragmentActivity::class.java)
-    goToRecordActivityIntent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, RecordingFragment::class.java!!.getName())
+    goToRecordActivityIntent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, SpecificationRecordingFragment::class.java!!.getName())
     activity.startActivity(goToRecordActivityIntent)
   }
 

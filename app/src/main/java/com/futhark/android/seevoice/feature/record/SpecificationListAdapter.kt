@@ -13,7 +13,6 @@ import android.widget.TextView
 import com.futhark.android.seevoice.R
 import com.futhark.android.seevoice.base.BaseFragmentActivity
 import com.futhark.android.seevoice.controller.fragment.ExercisingFragment
-import com.futhark.android.seevoice.controller.fragment.RecordingFragment
 import com.futhark.android.seevoice.model.database.TableVoiceSpecification
 
 /**
@@ -83,8 +82,8 @@ class SpecificationListAdapter : CursorAdapter {
   private fun gotoModify(specificationEntry: TableVoiceSpecification.VoiceSpecificationEntry?) {
     val exerciseIntent = Intent(context, BaseFragmentActivity::class.java)
     val bundle = Bundle()
-    bundle.putSerializable(RecordingFragment.FRAGMENT_RECORDING_ARGUMENT_ITEM_MODEL, specificationEntry)
-    exerciseIntent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, RecordingFragment::class.java!!.getName())
+    bundle.putSerializable(SpecificationRecordingFragment.FRAGMENT_RECORDING_ARGUMENT_ITEM_MODEL, specificationEntry)
+    exerciseIntent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, SpecificationRecordingFragment::class.java!!.getName())
     exerciseIntent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_DATA_INTENT, bundle)
     context!!.startActivity(exerciseIntent)
   }
