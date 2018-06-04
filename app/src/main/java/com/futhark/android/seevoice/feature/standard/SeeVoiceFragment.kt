@@ -1,4 +1,4 @@
-package com.futhark.android.seevoice.feature.record
+package com.futhark.android.seevoice.feature.standard
 
 import android.graphics.Canvas
 import android.graphics.Color
@@ -141,7 +141,7 @@ class SeeVoiceFragment : BaseFragment() {
 
   }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle): View? {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     val view = inflater.inflate(R.layout.fragment_see_voice, container, false)
     pressingWhenTalking = view.findViewById(R.id.touch_pressing_when_talking)
     displayVoiceView = view.findViewById(R.id.display_exercising_voice)

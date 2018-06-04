@@ -1,4 +1,4 @@
-package com.futhark.android.seevoice.feature.record
+package com.futhark.android.seevoice.feature.standard
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
@@ -32,14 +32,6 @@ class SpecificationRecordingFragment : BaseFragment() {
   private var seeVoiceFragment: SeeVoiceFragment? = null
   private var voiceSpecificationEntry: VoiceSpecificationEntry? = null
 
-  private val onClickListener = View.OnClickListener { v ->
-    when (v.id) {
-      R.id.button_save_record -> {
-        saveCurrentVoice()
-        Toast.makeText(activity, getString(R.string.label_save_success), Toast.LENGTH_SHORT).show()
-      }
-    }
-  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -49,7 +41,7 @@ class SpecificationRecordingFragment : BaseFragment() {
     }
   }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View? {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle?): View? {
     val fragment = inflater.inflate(R.layout.fragment_recording, container, false)
     buttonSave = fragment.findViewById(R.id.button_save_record)
     titleEdit = fragment.findViewById(R.id.edit_voice_title)
@@ -65,6 +57,14 @@ class SpecificationRecordingFragment : BaseFragment() {
     childFragmentManager.beginTransaction().replace(R.id.fragment_display_voice, seeVoiceFragment).commit()
     val helper = SeeVoiceSqliteDatabaseHelper(activity)
     database = helper.writableDatabase
+    buttonSave!!.setOnClickListener { v ->
+      when (v.id) {
+        R.id.button_save_record -> {
+          saveCurrentVoice()
+          Toast.makeText(activity, getString(R.string.label_save_success), Toast.LENGTH_SHORT).show()
+        }
+      }
+    }
   }
 
   override fun onResume() {
@@ -81,10 +81,10 @@ class SpecificationRecordingFragment : BaseFragment() {
     val phonetic = phoneticEdit!!.text.toString()
     val author = authorEdit!!.text.toString()
     val recordData = seeVoiceFragment!!.lastRecordData ?: return -1L
-    val Size = recordData.size
-    val byteBuffer = ByteBuffer.allocate(2 * Size)
+    val size = recordData.size
+    val byteBuffer = ByteBuffer.allocate(2 * size)
     var index = 0
-    while (Size > index) {
+    while (size > index) {
       byteBuffer.putShort(recordData[index])
       index++
     }
@@ -93,19 +93,22 @@ class SpecificationRecordingFragment : BaseFragment() {
     values.put(VoiceSpecification.COLUMN_NAME_PHONETIC, phonetic)
     values.put(VoiceSpecification.COLUMN_NAME_AUTHOR, author)
     values.put(VoiceSpecification.COLUMN_NAME_DATA, byteBuffer.array())
+    val rows: Int
+    val rowId: Long
     if (voiceSpecificationEntry != null) {
-      val rows = database!!.update(VoiceSpecification.TABLE_NAME, values, VoiceSpecification._ID + "= ?", arrayOf(voiceSpecificationEntry!!.id!!.toString()))
-      return if (rows > 0) {
+      rows = database!!.update(VoiceSpecification.TABLE_NAME, values, VoiceSpecification._ID + "= ?", arrayOf(voiceSpecificationEntry!!.id!!.toString()))
+      rowId = if (rows > 0) {
         voiceSpecificationEntry!!.id!!
       } else {
         -1L
       }
     } else {
-      return database!!.insert(VoiceSpecification.TABLE_NAME, null, values)
+      rowId = database!!.insert(VoiceSpecification.TABLE_NAME, null, values)
     }
+    return rowId
   }
 
   companion object {
-    val FRAGMENT_RECORDING_ARGUMENT_ITEM_MODEL = "fragment_recording_arugment_item_model"
+    const val FRAGMENT_RECORDING_ARGUMENT_ITEM_MODEL = "fragment_recording_argument_item_model"
   }
 }

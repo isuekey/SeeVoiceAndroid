@@ -2,6 +2,7 @@ package com.futhark.android.seevoice.feature.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,7 @@ import com.futhark.android.seevoice.base.BaseFragmentActivity
 import com.futhark.android.seevoice.controller.fragment.ExercisingFragment
 import com.futhark.android.seevoice.controller.fragment.MeFragment
 import com.futhark.android.seevoice.controller.fragment.SupervisingListFragment
-import com.futhark.android.seevoice.feature.record.SpecificationListFragment
+import com.futhark.android.seevoice.feature.standard.SpecificationListFragment
 import com.futhark.android.seevoice.model.domain.ItemElement
 import java.util.*
 
@@ -42,7 +43,7 @@ class HomePageFragment : BaseFragment() {
     actionContainer.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
       val action = gridAdapter.getItem(position)
       val intent = Intent(activity, BaseFragmentActivity::class.java)
-
+      Log.i(TAG, "" + R.string.label_record + ", " + action.textRes)
       when (action.textRes) {
         R.string.label_record -> intent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, SpecificationListFragment::class.java.name)
         R.string.label_exercise_supervise -> intent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, SupervisingListFragment::class.java.name)

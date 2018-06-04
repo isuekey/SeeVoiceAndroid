@@ -1,4 +1,4 @@
-package com.futhark.android.seevoice.feature.record
+package com.futhark.android.seevoice.feature.standard
 
 import android.content.Context
 import android.content.Intent

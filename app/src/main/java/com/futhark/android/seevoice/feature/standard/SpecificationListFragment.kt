@@ -1,4 +1,4 @@
-package com.futhark.android.seevoice.feature.record
+package com.futhark.android.seevoice.feature.standard
 
 import android.content.Intent
 import android.database.Cursor
@@ -26,7 +26,7 @@ import com.futhark.android.seevoice.model.database.TableVoiceSpecification
  */
 
 class SpecificationListFragment : BaseFragment() {
-  internal var specificationListView: ListView? = null
+  private var specificationListView: ListView? = null
 
   private var listAdapter: SpecificationListAdapter? = null
   private var cursor: Cursor? = null
@@ -37,7 +37,7 @@ class SpecificationListFragment : BaseFragment() {
     setHasOptionsMenu(true)
   }
 
-  override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup, savedInstanceState: Bundle): View? {
+  override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     Log.i(TAG, "will create specification list fragment")
     return inflater!!.inflate(R.layout.fragment_empty_list, container, false)
   }
@@ -85,7 +85,7 @@ class SpecificationListFragment : BaseFragment() {
 
   private fun gotoRecordSpecification() {
     val goToRecordActivityIntent = Intent(activity, BaseFragmentActivity::class.java)
-    goToRecordActivityIntent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, SpecificationRecordingFragment::class.java!!.getName())
+    goToRecordActivityIntent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, SpecificationRecordingFragment::class.java.name)
     activity.startActivity(goToRecordActivityIntent)
   }
 

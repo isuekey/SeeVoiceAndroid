@@ -13,8 +13,8 @@ import android.widget.ListView
 import com.futhark.android.seevoice.R
 import com.futhark.android.seevoice.base.BaseFragment
 import com.futhark.android.seevoice.base.BaseFragmentActivity
-import com.futhark.android.seevoice.feature.record.SpecificationRecordingFragment
-import com.futhark.android.seevoice.feature.record.SpecificationListAdapter
+import com.futhark.android.seevoice.feature.standard.SpecificationRecordingFragment
+import com.futhark.android.seevoice.feature.standard.SpecificationListAdapter
 import com.futhark.android.seevoice.model.database.SeeVoiceSqliteDatabaseHelper
 import com.futhark.android.seevoice.model.database.TableVoiceSpecification
 
