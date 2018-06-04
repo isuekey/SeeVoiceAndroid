@@ -11,9 +11,9 @@ import android.widget.GridView
 import com.futhark.android.seevoice.R
 import com.futhark.android.seevoice.base.BaseFragment
 import com.futhark.android.seevoice.base.BaseFragmentActivity
-import com.futhark.android.seevoice.controller.fragment.ExercisingFragment
+import com.futhark.android.seevoice.feature.exercise.ExercisingFragment
 import com.futhark.android.seevoice.controller.fragment.MeFragment
-import com.futhark.android.seevoice.controller.fragment.SupervisingListFragment
+import com.futhark.android.seevoice.feature.supervise.SupervisingListFragment
 import com.futhark.android.seevoice.feature.standard.SpecificationListFragment
 import com.futhark.android.seevoice.model.domain.ItemElement
 import java.util.*
@@ -47,8 +47,8 @@ class HomePageFragment : BaseFragment() {
       when (action.textRes) {
         R.string.label_record -> intent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, SpecificationListFragment::class.java.name)
         R.string.label_exercise_supervise -> intent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, SupervisingListFragment::class.java.name)
-        R.string.label_exercise_examine -> intent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, MeFragment::class.java.name)
-        R.string.label_self -> intent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, ExercisingFragment::class.java.name)
+        R.string.label_exercise_examine -> intent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, ExercisingFragment::class.java.name)
+        R.string.label_self -> intent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, MeFragment::class.java.name)
         R.string.label_about -> intent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, ExercisingFragment::class.java.name)
         R.string.label_donate -> intent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, ExercisingFragment::class.java.name)
         R.string.label_declaration -> intent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, ExercisingFragment::class.java.name)

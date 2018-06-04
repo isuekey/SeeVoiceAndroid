@@ -1,44 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  >
+
+  <com.futhark.android.seevoice.view.DisplayVoiceView
+    android:id="@+id/display_voice_specification"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    />
+
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="2"
+    >
+
+    <com.futhark.android.seevoice.view.DisplayVoiceView
+      android:id="@+id/display_exercising_voice"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
+  </FrameLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     >
-    <com.futhark.android.seevoice.view.DisplayVoiceView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:id="@+id/display_voice_specification"
-        />
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        >
-        <com.futhark.android.seevoice.view.DisplayVoiceView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/display_exercising_voice"
-            />
-    </FrameLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:src="@mipmap/ic_launcher"
-            android:id="@+id/touch_pressing_when_talking"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/label_pressing_when_talking"
-            />
-    </LinearLayout>
+
+    <ImageView
+      android:id="@+id/touch_pressing_when_talking"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:src="@mipmap/ic_launcher"
+      />
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:text="@string/label_pressing_when_talking"
+      />
+  </LinearLayout>
 </LinearLayout>

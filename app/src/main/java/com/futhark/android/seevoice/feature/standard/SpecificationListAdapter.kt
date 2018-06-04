@@ -12,7 +12,7 @@ import android.widget.TextView
 
 import com.futhark.android.seevoice.R
 import com.futhark.android.seevoice.base.BaseFragmentActivity
-import com.futhark.android.seevoice.controller.fragment.ExercisingFragment
+import com.futhark.android.seevoice.feature.exercise.ExercisingFragment
 import com.futhark.android.seevoice.model.database.TableVoiceSpecification
 
 /**
