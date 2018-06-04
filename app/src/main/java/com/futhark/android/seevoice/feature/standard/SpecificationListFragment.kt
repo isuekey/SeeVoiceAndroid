@@ -4,15 +4,8 @@ import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ListView
-
 import com.futhark.android.seevoice.R
 import com.futhark.android.seevoice.base.BaseFragment
 import com.futhark.android.seevoice.base.BaseFragmentActivity
@@ -38,7 +31,7 @@ class SpecificationListFragment : BaseFragment() {
   }
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    Log.i(TAG, "will create specification list fragment")
+//    Log.i(TAG, "will create specification list fragment")
     return inflater!!.inflate(R.layout.fragment_empty_list, container, false)
   }
 

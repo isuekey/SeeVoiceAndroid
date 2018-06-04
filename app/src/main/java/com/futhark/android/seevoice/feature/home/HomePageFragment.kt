@@ -37,8 +37,8 @@ class HomePageFragment : BaseFragment() {
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
-    var actionContainer: GridView = view.findViewById(R.id.home_action_grid_container)
-    var gridAdapter = HomeActionGridAdapter(this.activity)
+    val actionContainer: GridView = view.findViewById(R.id.home_action_grid_container)
+    val gridAdapter = HomeActionGridAdapter(this.activity)
     actionContainer.adapter = gridAdapter
     actionContainer.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
       val action = gridAdapter.getItem(position)

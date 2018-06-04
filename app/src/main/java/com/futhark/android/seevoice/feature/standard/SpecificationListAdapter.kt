@@ -20,29 +20,22 @@ import com.futhark.android.seevoice.model.database.TableVoiceSpecification
  * Created by liuhr on 30/05/2017.
  */
 
-class SpecificationListAdapter : CursorAdapter {
-  private var layoutInflater: LayoutInflater? = null
-  private var context: Context? = null
-  private val showRecord: Boolean
-
-  constructor(context: Context, c: Cursor?, autoRequery: Boolean, showRecord: Boolean) : super(context, c, autoRequery) {
-    this.context = context
-    layoutInflater = LayoutInflater.from(context)
-    this.showRecord = showRecord
-  }
+class SpecificationListAdapter(private val context: Context, c: Cursor?, autoQuery: Boolean, private val showRecord: Boolean
+) : CursorAdapter(context, c, autoQuery) {
+  private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 
   override fun newView(context: Context, cursor: Cursor, parent: ViewGroup): View {
-    val itemView = layoutInflater!!.inflate(R.layout.item_of_specification_list, parent, false)
+    val itemView = layoutInflater.inflate(R.layout.item_of_specification_list, parent, false)
     itemView.tag = ItemHolder(itemView)
     return itemView
   }
 
   override fun bindView(view: View, context: Context, cursor: Cursor) {
     val itemHolder = view.tag as ItemHolder
-    itemHolder?.display(cursor)
+    itemHolder.display(cursor)
   }
 
-  private inner class ItemHolder constructor(private val itemView: View) {
+  private inner class ItemHolder constructor(itemView: View) {
     private val titleView: TextView = itemView.findViewById(R.id.text_specification_title)
     private val phoneticView: TextView = itemView.findViewById(R.id.text_specification_phonetic)
     private val authorView: TextView = itemView.findViewById(R.id.text_specification_author)
@@ -74,17 +67,17 @@ class SpecificationListAdapter : CursorAdapter {
     val exerciseIntent = Intent(context, BaseFragmentActivity::class.java)
     val bundle = Bundle()
     bundle.putSerializable(ExercisingFragment.FRAGMENT_EXERCISING_ARGUMENT_ITEM_MODEL, specificationEntry)
-    exerciseIntent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, ExercisingFragment::class.java!!.getName())
+    exerciseIntent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, ExercisingFragment::class.java.name)
     exerciseIntent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_DATA_INTENT, bundle)
-    context!!.startActivity(exerciseIntent)
+    context.startActivity(exerciseIntent)
   }
 
   private fun gotoModify(specificationEntry: TableVoiceSpecification.VoiceSpecificationEntry?) {
     val exerciseIntent = Intent(context, BaseFragmentActivity::class.java)
     val bundle = Bundle()
     bundle.putSerializable(SpecificationRecordingFragment.FRAGMENT_RECORDING_ARGUMENT_ITEM_MODEL, specificationEntry)
-    exerciseIntent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, SpecificationRecordingFragment::class.java!!.getName())
+    exerciseIntent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, SpecificationRecordingFragment::class.java.name)
     exerciseIntent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_DATA_INTENT, bundle)
-    context!!.startActivity(exerciseIntent)
+    context.startActivity(exerciseIntent)
   }
 }

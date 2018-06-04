@@ -1,5 +1,6 @@
 package com.futhark.android.seevoice.feature.standard
 
+import android.annotation.SuppressLint
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -23,13 +24,13 @@ import java.util.*
  * exercising fragment
  * Created by liuhr on 07/04/2017.
  */
-
+const val empty: Short = 0
 class SeeVoiceFragment : BaseFragment() {
   private var recordDataSize = 0
 
   private var initData: ShortArray? = null
-  internal var pressingWhenTalking: ImageView? = null
-  internal var displayVoiceView: DisplayVoiceView? = null
+  private var pressingWhenTalking: ImageView? = null
+  private var displayVoiceView: DisplayVoiceView? = null
 
   private var audioRecord: AudioRecord? = null
   private var paint: Paint? = null
@@ -41,12 +42,13 @@ class SeeVoiceFragment : BaseFragment() {
         displayVoiceController.clear()
         audioRecord!!.startRecording()
         isRecording = true
-        Log.d(BaseFragment.Companion.TAG, "start to record")
+        Log.d(BaseFragment.TAG, "start to record")
       }
       MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> {
         if (audioRecord != null) audioRecord!!.stop()
         isRecording = false
-        Log.d(BaseFragment.Companion.TAG, "stop recording")
+        v.performClick()
+        Log.d(BaseFragment.TAG, "stop recording")
       }
     }
     true
@@ -56,7 +58,6 @@ class SeeVoiceFragment : BaseFragment() {
     var lastVoiceRecord: ShortArray? = null
     private var recordDisplayData: ShortArray? = null
     private var displayData: FloatArray? = null
-    private val empty: Short = 0
     private var currentPosition = 0
 
     override fun draw(canvas: Canvas) {
@@ -97,9 +98,9 @@ class SeeVoiceFragment : BaseFragment() {
       if (!isRecording) return
       val read = audioRecord!!.read(recordDisplayData!!, 0, recordDataSize)
       when (read) {
-        AudioRecord.ERROR -> Log.d(BaseFragment.Companion.TAG, " 不知道什么东西错了")
-        AudioRecord.ERROR_BAD_VALUE -> Log.d(BaseFragment.Companion.TAG, "数据格式有问题")
-        AudioRecord.ERROR_INVALID_OPERATION -> Log.d(BaseFragment.Companion.TAG, "操作不正确")
+        AudioRecord.ERROR -> Log.d(BaseFragment.TAG, " 不知道什么东西错了")
+        AudioRecord.ERROR_BAD_VALUE -> Log.d(BaseFragment.TAG, "数据格式有问题")
+        AudioRecord.ERROR_INVALID_OPERATION -> Log.d(BaseFragment.TAG, "操作不正确")
         else -> if (read > 0) {
           System.arraycopy(recordDisplayData!!, 0, lastVoiceRecord!!, 0, read)
           currentPosition = lastVoiceRecord!!.size
@@ -127,7 +128,7 @@ class SeeVoiceFragment : BaseFragment() {
   }
 
   val lastRecordData: ShortArray?
-    get() = displayVoiceController?.lastVoiceRecord
+    get() = displayVoiceController.lastVoiceRecord
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -141,6 +142,7 @@ class SeeVoiceFragment : BaseFragment() {
 
   }
 
+  @SuppressLint("ClickableViewAccessibility")
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     val view = inflater.inflate(R.layout.fragment_see_voice, container, false)
     pressingWhenTalking = view.findViewById(R.id.touch_pressing_when_talking)
@@ -176,7 +178,7 @@ class SeeVoiceFragment : BaseFragment() {
   }
 
   companion object {
-    val FRAGMENT_EXERCISING_ARGUMENT_ITEM_MODEL = "fragment_exercising_argument_item_model"
+    const val FRAGMENT_EXERCISING_ARGUMENT_ITEM_MODEL = "fragment_exercising_argument_item_model"
     fun newInstance(initData: ShortArray?): SeeVoiceFragment {
       val fragment = SeeVoiceFragment()
       if (initData != null) {
