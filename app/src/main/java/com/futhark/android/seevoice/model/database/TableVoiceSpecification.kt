@@ -18,7 +18,7 @@ import java.nio.ByteBuffer
 
 object TableVoiceSpecification {
 
-  var COLUMNS = arrayOf<String>(VoiceSpecification._ID, VoiceSpecification.COLUMN_NAME_LOCALE,
+  var COLUMNS = arrayOf(VoiceSpecification._ID, VoiceSpecification.COLUMN_NAME_LOCALE,
       VoiceSpecification.COLUMN_NAME_TITLE, VoiceSpecification.COLUMN_NAME_PHONETIC,
       VoiceSpecification.COLUMN_NAME_DESCRIPTION, VoiceSpecification.COLUMN_NAME_AUTHOR,
       VoiceSpecification.COLUMN_NAME_ACCOUNT, VoiceSpecification.COLUMN_NAME_ORDER,
@@ -26,18 +26,18 @@ object TableVoiceSpecification {
 
   interface VoiceSpecification {
     companion object {
-      val TABLE_NAME = "voice_specification"
-      val COLUMN_NAME_LOCALE = "locale_info"
-      val COLUMN_NAME_TITLE = "title"
-      val COLUMN_NAME_PHONETIC = "phonetic"
-      val COLUMN_NAME_DESCRIPTION = "description"
-      val COLUMN_NAME_DATA = "voice_data"
-      val COLUMN_NAME_AUTHOR = "author"
-      val COLUMN_NAME_ACCOUNT = "account"
-      val COLUMN_NAME_MAX_VOLUME = "max_volume"
-      val COLUMN_NAME_ORDER = "sort"
-      val _ID = BaseColumns._ID
-      val _COUNT = BaseColumns._COUNT
+      const val TABLE_NAME = "voice_specification"
+      const val COLUMN_NAME_LOCALE = "locale_info"
+      const val COLUMN_NAME_TITLE = "title"
+      const val COLUMN_NAME_PHONETIC = "phonetic"
+      const val COLUMN_NAME_DESCRIPTION = "description"
+      const val COLUMN_NAME_DATA = "voice_data"
+      const val COLUMN_NAME_AUTHOR = "author"
+      const val COLUMN_NAME_ACCOUNT = "account"
+      const val COLUMN_NAME_MAX_VOLUME = "max_volume"
+      const val COLUMN_NAME_ORDER = "sort"
+      const val _ID = BaseColumns._ID
+      const val _COUNT = BaseColumns._COUNT
     }
   }
 
@@ -53,7 +53,7 @@ object TableVoiceSpecification {
       if (cursor == null || cursor.isClosed) {
         this.data = null
       } else {
-        this.id = cursor!!.getLong(cursor.getColumnIndex(VoiceSpecification._ID))
+        this.id = cursor.getLong(cursor.getColumnIndex(VoiceSpecification._ID))
         this.title = cursor.getString(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecification.COLUMN_NAME_TITLE))
         this.phonetic = cursor.getString(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecification.COLUMN_NAME_PHONETIC))
         this.author = cursor.getString(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecification.COLUMN_NAME_AUTHOR))

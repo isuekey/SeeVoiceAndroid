@@ -13,6 +13,7 @@ class SeeVoiceSqliteDatabaseHelper(context: Context) : SQLiteOpenHelper(context,
 
   override fun onCreate(db: SQLiteDatabase) {
     db.execSQL(TableVoiceSpecification.createTableSql())
+    db.execSQL(TableVoiceAccount.createTableSql())
   }
 
   override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -29,7 +30,6 @@ class SeeVoiceSqliteDatabaseHelper(context: Context) : SQLiteOpenHelper(context,
   }
 
   companion object {
-
     val DATABASE_VERSION = 1
     val DATABASE_NAME = "SeeVoice.db"
   }
