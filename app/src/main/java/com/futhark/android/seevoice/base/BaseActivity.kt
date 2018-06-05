@@ -15,21 +15,21 @@ import org.greenrobot.eventbus.Subscribe
  */
 
 open class BaseActivity : Activity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        EventBus.getDefault().register(this)
-    }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    EventBus.getDefault().register(this)
+  }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        EventBus.getDefault().unregister(this)
-    }
+  override fun onDestroy() {
+    super.onDestroy()
+    EventBus.getDefault().unregister(this)
+  }
 
-    @Subscribe
-    fun onMessageOfBaseActivity(baseActivityMessage: BaseActivityMessage) {
-    }
+  @Subscribe
+  fun onMessageOfBaseActivity(baseActivityMessage: BaseActivityMessage) {
+  }
 
-    companion object {
-        val TAG = AppConstant.TAG
-    }
+  companion object {
+    val TAG = AppConstant.TAG
+  }
 }

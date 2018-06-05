@@ -11,11 +11,11 @@ import java.sql.Date
 
 class SeeVoiceAccount : Account {
 
-    private val domain: String? = null
-    private val type: String? = null
-    private val createAt: Date? = null
+  private val domain: String? = null
+  private val type: String? = null
+  private val createAt: Date? = null
 
-    constructor(name: String, type: String) : super(name, type) {}
+  constructor(name: String, type: String) : super(name, type) {}
 
-    constructor(`in`: Parcel) : super(`in`) {}
+  constructor(`in`: Parcel) : super(`in`) {}
 }

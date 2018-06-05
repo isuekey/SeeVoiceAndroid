@@ -6,7 +6,7 @@ package com.futhark.android.seevoice.model.constant
  */
 
 interface AppConstant {
-    companion object {
-        val TAG = "see_voice_application"
-    }
+  companion object {
+    val TAG = "see_voice_application"
+  }
 }

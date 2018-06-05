@@ -6,6 +6,6 @@ package com.futhark.android.seevoice.model.message
  */
 
 open class MessageBase {
-    var messageId: Int = 0
-    var messageInfo: String = ""
+  var messageId: Int = 0
+  var messageInfo: String = ""
 }
