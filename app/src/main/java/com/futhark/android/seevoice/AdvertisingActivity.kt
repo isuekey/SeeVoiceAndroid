@@ -1,4 +1,4 @@
-package com.futhark.android.seevoice.controller.activity
+package com.futhark.android.seevoice
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,6 @@ import android.view.View
 import android.view.Window
 import android.widget.Button
 
-import com.futhark.android.seevoice.R
 import com.futhark.android.seevoice.base.BaseActivity
 import com.futhark.android.seevoice.base.BaseFragmentActivity
 import com.futhark.android.seevoice.feature.home.HomePageFragment

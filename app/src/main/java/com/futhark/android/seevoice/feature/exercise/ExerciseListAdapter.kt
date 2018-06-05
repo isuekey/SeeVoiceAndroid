@@ -1,4 +1,4 @@
-package com.futhark.android.seevoice.controller.adapter
+package com.futhark.android.seevoice.feature.exercise
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -13,13 +13,10 @@ import com.futhark.android.seevoice.R
  * exercise list adapter
  * Created by liuhr on 06/04/2017.
  */
+@Suppress("unused")
+class ExerciseListAdapter(context: Context) : ArrayAdapter<ExerciseListAdapter.ExerciseItemInterface>(context, 0) {
+    private val inflater: LayoutInflater = LayoutInflater.from(context)
 
-class ExerciseListAdapter<T : ExerciseListAdapter.ExerciseItemInterface>(context: Context) : ArrayAdapter<T>(context, 0) {
-    private val inflater: LayoutInflater
-
-    init {
-        this.inflater = LayoutInflater.from(context)
-    }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var v = convertView
@@ -27,23 +24,19 @@ class ExerciseListAdapter<T : ExerciseListAdapter.ExerciseItemInterface>(context
         if (v == null) {
             v = inflater.inflate(R.layout.item_of_exercise_list, parent, false)
             holder = ExerciseItemHolder(v)
-            v!!.tag = holder
+            v.tag = holder
         } else {
-            holder = v.tag as ExerciseListAdapter<T>.ExerciseItemHolder
+            holder = v.tag as ExerciseItemHolder
         }
         holder.setDataToDisplay(getItem(position))
-        return v
+        return v!!
     }
 
     internal inner class ExerciseItemHolder(itemView: View) {
-        var titleText: TextView? = null
+        private var titleText: TextView = itemView.findViewById(R.id.item_of_exercise_list_title)
 
-        init {
-            titleText = itemView.findViewById(R.id.item_of_exercise_list_title)
-        }
-
-        fun setDataToDisplay(data: T?) {
-            titleText!!.text = data!!.title
+        fun setDataToDisplay(data: ExerciseItemInterface) {
+            titleText.text = data.title
         }
     }
 

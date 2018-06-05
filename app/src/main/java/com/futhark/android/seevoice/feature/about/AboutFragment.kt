@@ -29,7 +29,7 @@ class AboutFragment : BaseFragment() {
     view.findViewById<View>(R.id.trigger_display_btc_qr_code).setOnClickListener(onClickListener)
   }
 
-  fun displayQRCodeView(imgRes:Int) {
-
+  @Suppress("UNUSED_PARAMETER")
+  private fun displayQRCodeView(imgRes:Int) {
   }
 }
