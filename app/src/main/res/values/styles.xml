@@ -22,4 +22,22 @@
     <item name="android:textColor">@android:color/holo_blue_light</item>
   </style>
 
+  <style name="aboutQRContainer">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_gravity">center</item>
+  </style>
+  <style name="aboutQRFrame" parent="aboutQRContainer">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:padding">@dimen/element_vertical_padding</item>
+    <item name="android:background">@android:color/white</item>
+    <item name="android:layout_centerHorizontal">true</item>
+  </style>
+  <style name="aboutQRCodeView">
+    <item name="android:layout_width">@dimen/img_display_major</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:scaleType">fitXY</item>
+    <item name="android:adjustViewBounds">true</item>
+  </style>
 </resources>

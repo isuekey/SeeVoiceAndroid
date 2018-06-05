@@ -24,7 +24,6 @@ import java.util.*
  * exercising fragment
  * Created by liuhr on 07/04/2017.
  */
-const val empty: Short = 0
 class SeeVoiceFragment : BaseFragment() {
   private var recordDataSize = 0
 
@@ -179,6 +178,7 @@ class SeeVoiceFragment : BaseFragment() {
 
   companion object {
     const val FRAGMENT_EXERCISING_ARGUMENT_ITEM_MODEL = "fragment_exercising_argument_item_model"
+    const val empty: Short = 0
     fun newInstance(initData: ShortArray?): SeeVoiceFragment {
       val fragment = SeeVoiceFragment()
       if (initData != null) {

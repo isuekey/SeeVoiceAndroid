@@ -1,9 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  >
+
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/content_about"
+      android:textAlignment="center"/>
 
-</LinearLayout>
+    <LinearLayout
+      android:id="@+id/trigger_display_eth_qr_code"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_about_eth"/>
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/content_about_eth"
+        android:textIsSelectable="true"
+        />
+
+      <RelativeLayout
+        android:id="@+id/img_eth_qr_code"
+        style="@style/aboutQRContainer"
+        android:visibility="visible">
+
+        <FrameLayout
+          style="@style/aboutQRFrame">
+
+          <ImageView
+            style="@style/aboutQRCodeView"
+            android:contentDescription="@string/label_about_eth"
+            android:src="@mipmap/ic_etherum_address"/>
+
+        </FrameLayout>
+      </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/trigger_display_btc_qr_code"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_about_bit_coin"/>
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/content_about_bit_coin"
+        android:textIsSelectable="true"
+        />
+
+      <RelativeLayout
+        android:id="@+id/img_btc_qr_code"
+        style="@style/aboutQRContainer">
+
+        <FrameLayout
+          style="@style/aboutQRFrame">
+
+          <ImageView
+            style="@style/aboutQRCodeView"
+            android:src="@mipmap/ic_bitcoin_address"
+            android:contentDescription="@string/label_about_bit_coin"
+            />
+        </FrameLayout>
+      </RelativeLayout>
+    </LinearLayout>
+  </LinearLayout>
+</ScrollView>

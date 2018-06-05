@@ -25,7 +25,6 @@ import java.util.*
  * Created by liuhr on 07/04/2017.
  */
 
-const val empty: Short = 0
 class ExercisingFragment : BaseFragment() {
   private var recordDataSize = 0
 
@@ -236,6 +235,7 @@ class ExercisingFragment : BaseFragment() {
 
   companion object {
     const val FRAGMENT_EXERCISING_ARGUMENT_ITEM_MODEL = "fragment_exercising_argument_item_model"
+    const val empty: Short = 0
 //    fun newInstance(itemModel: TableVoiceSpecification.VoiceSpecificationEntry): ExercisingFragment {
 //      val fragment = ExercisingFragment()
 //      val arguments = Bundle()

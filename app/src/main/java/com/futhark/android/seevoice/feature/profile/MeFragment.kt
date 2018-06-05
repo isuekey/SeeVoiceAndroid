@@ -1,4 +1,4 @@
-package com.futhark.android.seevoice.controller.fragment
+package com.futhark.android.seevoice.feature.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater

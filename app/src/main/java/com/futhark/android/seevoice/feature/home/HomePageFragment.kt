@@ -11,10 +11,12 @@ import android.widget.GridView
 import com.futhark.android.seevoice.R
 import com.futhark.android.seevoice.base.BaseFragment
 import com.futhark.android.seevoice.base.BaseFragmentActivity
+import com.futhark.android.seevoice.feature.about.AboutFragment
 import com.futhark.android.seevoice.feature.exercise.ExercisingFragment
-import com.futhark.android.seevoice.controller.fragment.MeFragment
+import com.futhark.android.seevoice.feature.profile.MeFragment
 import com.futhark.android.seevoice.feature.supervise.SupervisingListFragment
 import com.futhark.android.seevoice.feature.standard.SpecificationListFragment
+import com.futhark.android.seevoice.feature.thanks.ThanksFragment
 import com.futhark.android.seevoice.model.domain.ItemElement
 import java.util.*
 
@@ -25,11 +27,6 @@ import java.util.*
  */
 
 class HomePageFragment : BaseFragment() {
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setHasOptionsMenu(true)
-  }
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
     return inflater!!.inflate(R.layout.fragment_home_page, container, false)
@@ -49,9 +46,8 @@ class HomePageFragment : BaseFragment() {
         R.string.label_exercise_supervise -> intent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, SupervisingListFragment::class.java.name)
         R.string.label_exercise_examine -> intent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, ExercisingFragment::class.java.name)
         R.string.label_self -> intent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, MeFragment::class.java.name)
-        R.string.label_about -> intent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, ExercisingFragment::class.java.name)
-        R.string.label_donate -> intent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, ExercisingFragment::class.java.name)
-        R.string.label_declaration -> intent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, ExercisingFragment::class.java.name)
+        R.string.label_about -> intent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, AboutFragment::class.java.name)
+        R.string.label_thanks -> intent.putExtra(BaseFragmentActivity.DUTY_FATE_FRAGMENT_INTENT, ThanksFragment::class.java.name)
       }
       startActivity(intent)
     }
@@ -66,7 +62,7 @@ class HomePageFragment : BaseFragment() {
     itemElementArrayList.add(ItemElement(R.mipmap.ic_eat_melon, R.string.label_exercise_examine))
     itemElementArrayList.add(ItemElement(R.mipmap.ic_any_try, R.string.label_self))
     itemElementArrayList.add(ItemElement(R.mipmap.ic_voice_mountain, R.string.label_about))
-    itemElementArrayList.add(ItemElement(R.mipmap.ic_history_voice, R.string.label_declaration))
+    itemElementArrayList.add(ItemElement(R.mipmap.ic_history_voice, R.string.label_thanks))
     return itemElementArrayList
   }
 

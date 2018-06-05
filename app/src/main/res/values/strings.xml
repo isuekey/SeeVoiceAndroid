@@ -22,6 +22,7 @@
   <string name="label_self">我</string>
   <string name="label_about">关于</string>
   <string name="label_donate">捐助</string>
+  <string name="label_thanks">致谢</string>
   <string name="label_declaration">声明</string>
   <string name="label_save_success">保存成功</string>
   <string name="label_specification_record">标准录入</string>
@@ -29,5 +30,25 @@
   <string name="menu_exercise_to_record">@string/label_record</string>
   <string name="menu_to_select_language">选择语言</string>
   <string name="menu_to_select_exercise_database">选择练习库</string>
+  <!-- thanks -->
+  <string name="label_thanks_title">致谢</string>
+  <string name="content_thanks">
+    感谢刘**提供的思路，感谢刘**给予产品设计及体验支持。感谢NG提供的machine-learning课程。
+    感谢探索频道提供的科普知识。
+  </string>
+  <string name="label_thanks_license">LICENSE</string>
+  <string name="content_thanks_license">MIT</string>
 
+  <!-- about -->
+  <string name="content_about">这个应用我希望能够展示声音的形状、特征，让人可以直接通过观看就知道两次发音是否一致。本来想放弃的，
+    但是看到很多听障朋友努力的融入社会，独立生活。我觉得应该尽一份心力。
+    如果大家有兴趣，可以交流或者自己搞，只希望尽快帮助到需要帮助的人。
+    建议以太坊捐助，方便发放SVT。BitCoin的捐助，基本上就只能是捐助了。
+    大家切记使用个人钱包捐助，方便返利。
+    如果不熟悉怎么使用，就不要勉强了。
+  </string>
+  <string name="label_about_eth">以太坊</string>
+  <string name="content_about_eth">0x00647cad1E1EFB739376B9dfA45BcF4D2CaC10a4</string>
+  <string name="label_about_bit_coin">比特币</string>
+  <string name="content_about_bit_coin">1AEaL2RQVHazASuQqtHUMY3d1kCTrGJFHk</string>
 </resources>

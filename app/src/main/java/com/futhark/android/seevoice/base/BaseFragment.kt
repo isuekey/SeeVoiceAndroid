@@ -15,21 +15,22 @@ import org.greenrobot.eventbus.Subscribe
  */
 
 open class BaseFragment : Fragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        EventBus.getDefault().register(this)
-    }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setHasOptionsMenu(true)
+    EventBus.getDefault().register(this)
+  }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        EventBus.getDefault().unregister(this)
-    }
+  override fun onDestroy() {
+    super.onDestroy()
+    EventBus.getDefault().unregister(this)
+  }
 
-    @Subscribe
-    fun onMessageOfBaseFragment(baseFragmentMessage: BaseFragmentMessage) {
-    }
+  @Subscribe
+  fun onMessageOfBaseFragment(baseFragmentMessage: BaseFragmentMessage) {
+  }
 
-    companion object {
-        val TAG = AppConstant.TAG
-    }
+  companion object {
+    val TAG = AppConstant.TAG
+  }
 }
