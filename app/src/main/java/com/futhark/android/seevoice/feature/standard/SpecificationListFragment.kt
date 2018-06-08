@@ -61,7 +61,8 @@ class SpecificationListFragment : BaseFragment() {
   override fun onResume() {
     super.onResume()
     cursor = database!!.query(TableVoiceSpecification.VoiceSpecification.TABLE_NAME,
-        TableVoiceSpecification.COLUMNS, null, null, null, null, null)
+        TableVoiceSpecification.COLUMNS, null, null,
+        null, null, null)
     if (cursor != null) {
       cursor!!.moveToFirst()
       listAdapter!!.swapCursor(cursor)

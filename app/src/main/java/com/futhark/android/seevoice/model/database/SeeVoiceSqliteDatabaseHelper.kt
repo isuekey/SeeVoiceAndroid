@@ -9,7 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper
  * Created by liuhr on 12/04/2017.
  */
 
-class SeeVoiceSqliteDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+class SeeVoiceSqliteDatabaseHelper(context: Context) : SQLiteOpenHelper(context,
+    DATABASE_NAME, null, DATABASE_VERSION) {
 
   override fun onCreate(db: SQLiteDatabase) {
     db.execSQL(TableVoiceSpecification.createTableSql())

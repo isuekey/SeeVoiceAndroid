@@ -51,4 +51,14 @@
   <string name="content_about_eth">0x00647cad1E1EFB739376B9dfA45BcF4D2CaC10a4</string>
   <string name="label_about_bit_coin">比特币</string>
   <string name="content_about_bit_coin">1AEaL2RQVHazASuQqtHUMY3d1kCTrGJFHk</string>
+
+  <!-- me -->
+  <string name="label_me_account">账号</string>
+  <string name="label_me_title">称谓</string>
+  <string name="label_me_lang">母语</string>
+  <string name="label_me_full_name">全称</string>
+  <string name="label_me_edit">修改</string>
+  <string name="menu_me_account_edit">编辑</string>
+  <string name="menu_me_account_add">增加</string>
+  <string name="menu_me_account_switch">切换</string>
 </resources>

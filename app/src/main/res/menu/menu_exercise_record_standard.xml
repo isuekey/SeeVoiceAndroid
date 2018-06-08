@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/menu_exercise_record_standard"
-        android:title="@string/menu_exercise_to_record"/>
+  <item
+    android:id="@+id/menu_exercise_record_standard"
+    android:title="@string/menu_exercise_to_record"/>
 </menu>

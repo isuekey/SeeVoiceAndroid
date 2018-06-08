@@ -3,6 +3,37 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:orientation="vertical">
-
+  android:orientation="vertical"
+  android:padding="@dimen/activity_horizontal_margin">
+  <TextView
+    android:id="@+id/label_me_account"
+    style="@style/meTitleText"
+    android:text="@string/label_empty"
+    />
+  <TextView
+    android:id="@+id/label_me_title"
+    style="@style/meTitleText"
+    android:text="@string/label_empty"
+    />
+  <TextView
+    android:id="@+id/label_me_lang"
+    style="@style/meTitleText"
+    android:text="@string/label_empty"
+    />
+  <TextView
+    android:id="@+id/label_me_full_name"
+    style="@style/meTitleText"
+    android:text="@string/label_empty"
+    />
+  <TextView
+    android:id="@+id/label_me_created_at"
+    style="@style/meTitleText"
+    android:text="@string/label_empty"
+    />
+  <Button
+    android:id="@+id/button_me_edit_profile"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/label_me_edit"
+    />
 </LinearLayout>

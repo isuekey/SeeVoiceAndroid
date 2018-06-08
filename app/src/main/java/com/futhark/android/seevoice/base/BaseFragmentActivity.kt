@@ -31,7 +31,7 @@ open class BaseFragmentActivity : BaseActivity() {
   }
 
   companion object {
-    val DUTY_FATE_FRAGMENT_INTENT = "duty_fate_fragment_intent"
-    val DUTY_FATE_FRAGMENT_DATA_INTENT = "duty_fate_fragment_data_intent"
+    const val DUTY_FATE_FRAGMENT_INTENT = "duty_fate_fragment_intent"
+    const val DUTY_FATE_FRAGMENT_DATA_INTENT = "duty_fate_fragment_data_intent"
   }
 }
