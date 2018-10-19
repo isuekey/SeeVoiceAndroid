@@ -5,6 +5,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.view.*
+import android.widget.AdapterView
 import android.widget.ListView
 import com.futhark.android.seevoice.R
 import com.futhark.android.seevoice.base.BaseFragment
@@ -41,6 +42,13 @@ class SpecificationListFragment : BaseFragment() {
     listAdapter = SpecificationListAdapter(activity, null, true, true)
     specificationListView!!.adapter = listAdapter
     database = SeeVoiceSqliteDatabaseHelper(activity).readableDatabase
+    val onItemLongClickListener = AdapterView.OnItemLongClickListener { adapterView, view, i, l ->
+      val item = adapterView.getItemAtPosition(i)
+      val voiceSpecificationEntry = TableVoiceSpecification.VoiceSpecificationEntry(cursor)
+      deleteTheRecord(voiceSpecificationEntry)
+      true
+    }
+    specificationListView!!.onItemLongClickListener = onItemLongClickListener
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -60,21 +68,38 @@ class SpecificationListFragment : BaseFragment() {
 
   override fun onResume() {
     super.onResume()
-    cursor = database!!.query(TableVoiceSpecification.VoiceSpecification.TABLE_NAME,
-        TableVoiceSpecification.COLUMNS, null, null,
-        null, null, null)
-    if (cursor != null) {
-      cursor!!.moveToFirst()
-      listAdapter!!.swapCursor(cursor)
-    }
+    resumeCursor()
   }
 
   override fun onPause() {
     super.onPause()
-    if (cursor != null) {
-      cursor!!.close()
-      cursor = null
+    closeCursor()
+  }
+
+  private fun closeCursor() {
+    cursor?.close()
+    cursor = null
+  }
+
+  private fun resumeCursor() {
+    closeCursor()
+    cursor = database!!.query(TableVoiceSpecification.VoiceSpecification.TABLE_NAME,
+        TableVoiceSpecification.COLUMNS, null, null,
+        null, null, null)
+    if (cursor == null) return
+    cursor?.moveToFirst()
+    if (cursor!!.isAfterLast) {
+      gotoRecordSpecification()
+    } else {
+      listAdapter!!.swapCursor(cursor)
     }
+
+  }
+
+  private fun deleteTheRecord(voice: TableVoiceSpecification.VoiceSpecificationEntry) {
+    val id = voice.id
+    database?.delete(TableVoiceSpecification.VoiceSpecification.TABLE_NAME,TableVoiceSpecification.VoiceSpecification._ID + "= ?", arrayOf(id.toString()))
+    resumeCursor()
   }
 
   private fun gotoRecordSpecification() {

@@ -22,7 +22,7 @@ object TableVoiceAccount {
   const val _ID = BaseColumns._ID
   const val _COUNT = BaseColumns._COUNT
   private const val WHERE_STATUS_IS = " status=? or status='-1' "
-  private const val STATUS_IS_ACTIVE = "1"
+  const val STATUS_IS_ACTIVE = 1
   val COLUMNS = arrayOf(_ID, COLUMN_NAME_ACCOUNT, COLUMN_NAME_PASSWORD_MD5,
       COLUMN_NAME_TITLE, COLUMN_NAME_LANG, COLUMN_NAME_FULL_NAME, COLUMN_NAME_CREATED_AT,
       COLUMN_NAME_STATUS, COLUMN_NAME_ORDER)
@@ -70,7 +70,7 @@ object TableVoiceAccount {
 
   fun getVoiceAccountEntry(database: SQLiteDatabase) : VoiceAccountEntry {
     val cursor = database.query(TABLE_NAME,
-        COLUMNS, WHERE_STATUS_IS, arrayOf(STATUS_IS_ACTIVE), null,
+        COLUMNS, WHERE_STATUS_IS, arrayOf(STATUS_IS_ACTIVE.toString()), null,
         null, null)
     val accountEntry: VoiceAccountEntry?
     if (cursor.moveToFirst()) {
@@ -86,8 +86,8 @@ object TableVoiceAccount {
     values.put(COLUMN_NAME_STATUS, -1)
     values.put(COLUMN_NAME_CREATED_AT, Date().time)
     database.insert(TABLE_NAME, null, values)
-    accountEntry = getVoiceAccountEntry(database)
     cursor.close()
+    accountEntry = getVoiceAccountEntry(database)
     return accountEntry
   }
 }

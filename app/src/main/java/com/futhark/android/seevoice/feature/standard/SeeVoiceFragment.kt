@@ -18,6 +18,7 @@ import com.futhark.android.seevoice.R
 import com.futhark.android.seevoice.base.BaseFragment
 import com.futhark.android.seevoice.view.DisplayVoiceView
 import java.util.*
+import kotlin.math.min
 
 
 /**
@@ -41,23 +42,22 @@ class SeeVoiceFragment : BaseFragment() {
         displayVoiceController.clear()
         audioRecord!!.startRecording()
         isRecording = true
-        Log.d(BaseFragment.TAG, "start to record")
       }
       MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> {
         if (audioRecord != null) audioRecord!!.stop()
         isRecording = false
         v.performClick()
-        Log.d(BaseFragment.TAG, "stop recording")
       }
     }
     true
   }
 
   private val displayVoiceController = object : SeeVoiceController {
-    var lastVoiceRecord: ShortArray? = null
-    private var recordDisplayData: ShortArray? = null
+    var lastVoiceRecord: ShortArray? = null // to display data
+    private var recordDisplayData: ShortArray? = null // read from audio
     private var displayData: FloatArray? = null
     private var currentPosition = 0
+    private val maxDataSize = 5120
 
     override fun draw(canvas: Canvas) {
       //            int startAt = currentPosition - recordDataSize < 0 ? 0 : currentPosition - recordDataSize;
@@ -101,10 +101,47 @@ class SeeVoiceFragment : BaseFragment() {
         AudioRecord.ERROR_BAD_VALUE -> Log.d(BaseFragment.TAG, "数据格式有问题")
         AudioRecord.ERROR_INVALID_OPERATION -> Log.d(BaseFragment.TAG, "操作不正确")
         else -> if (read > 0) {
-          System.arraycopy(recordDisplayData!!, 0, lastVoiceRecord!!, 0, read)
+//          stackVoiceData(recordDisplayData!!, lastVoiceRecord!!)
+//          System.arraycopy(recordDisplayData!!, 0, lastVoiceRecord!!, 0, read)
+          val resultSize = lastVoiceRecord!!.size + recordDisplayData!!.size
+          if (resultSize > maxDataSize) {
+            lastVoiceRecord = lastVoiceRecord!!.copyOfRange(recordDisplayData!!.size, lastVoiceRecord!!.size)!!.plus(recordDisplayData!!)
+          } else {
+            lastVoiceRecord = lastVoiceRecord!!.plus(recordDisplayData!!)
+          }
           currentPosition = lastVoiceRecord!!.size
+          Log.d(TAG, "recordsize , $currentPosition")
         }
       }
+    }
+
+    private fun stackVoiceData(from: ShortArray, to: ShortArray, believe:Int = min(100, min(from.size, to.size))) {
+      val fromSize = from.size
+      val toSize = to.size
+      var isSame = false
+      var tidx = 0
+      while (tidx < toSize) {
+        isSame = true
+        val compareSize = min(believe, toSize - tidx)
+        var fidx = 0
+        while (fidx < compareSize) {
+          isSame = isSame && (from[fidx] == to[tidx + fidx])
+          if (!isSame) break
+          fidx++
+        }
+        if(isSame) break
+        tidx++
+      }
+      var sameIdx = toSize
+      if (isSame) {
+        sameIdx = tidx
+      }
+      if (sameIdx + fromSize <= toSize) return
+      val unSameRange =  sameIdx + fromSize - toSize
+      val fromBegin = fromSize - unSameRange
+      val trans = to.plus(from.copyOfRange(fromBegin, fromSize))
+      System.arraycopy(trans, unSameRange, to, 0, toSize)
+
     }
 
     override fun clear() {
@@ -126,8 +163,7 @@ class SeeVoiceFragment : BaseFragment() {
     }
   }
 
-  val lastRecordData: ShortArray?
-    get() = displayVoiceController.lastVoiceRecord
+  val lastRecordData: ShortArray? get() = displayVoiceController.lastVoiceRecord
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

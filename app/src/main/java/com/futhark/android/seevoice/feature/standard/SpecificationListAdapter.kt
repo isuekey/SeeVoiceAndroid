@@ -56,10 +56,10 @@ class SpecificationListAdapter(private val context: Context, c: Cursor?, autoQue
     }
 
     fun display(cursor: Cursor) {
-      titleView.text = cursor.getString(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecification.COLUMN_NAME_TITLE))
-      phoneticView.text = cursor.getString(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecification.COLUMN_NAME_PHONETIC))
-      authorView.text = cursor.getString(cursor.getColumnIndex(TableVoiceSpecification.VoiceSpecification.COLUMN_NAME_AUTHOR))
       voiceSpecificationEntry = TableVoiceSpecification.VoiceSpecificationEntry(cursor)
+      titleView.text = voiceSpecificationEntry?.title
+      phoneticView.text = voiceSpecificationEntry?.phonetic
+      authorView.text = voiceSpecificationEntry?.author
     }
   }
 

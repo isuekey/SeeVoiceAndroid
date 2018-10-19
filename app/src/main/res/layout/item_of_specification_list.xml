@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     style="@style/homeBlockContainer"
+    android:descendantFocusability="blocksDescendants"
     >
     <TextView
         android:id="@+id/text_specification_title"

@@ -27,6 +27,7 @@ class SpecificationRecordingFragment : BaseFragment() {
   private var titleEdit: EditText? = null
   private var phoneticEdit: EditText? = null
   private var authorEdit: EditText? = null
+  private var rowId: Long = -1
 
   private var database: SQLiteDatabase? = null
   private var seeVoiceFragment: SeeVoiceFragment? = null
@@ -38,6 +39,7 @@ class SpecificationRecordingFragment : BaseFragment() {
     val arguments = arguments
     if (arguments != null && arguments.containsKey(FRAGMENT_RECORDING_ARGUMENT_ITEM_MODEL)) {
       voiceSpecificationEntry = arguments.get(FRAGMENT_RECORDING_ARGUMENT_ITEM_MODEL) as VoiceSpecificationEntry
+      rowId = voiceSpecificationEntry?.id!!
     }
   }
 
@@ -93,15 +95,8 @@ class SpecificationRecordingFragment : BaseFragment() {
     values.put(VoiceSpecification.COLUMN_NAME_PHONETIC, phonetic)
     values.put(VoiceSpecification.COLUMN_NAME_AUTHOR, author)
     values.put(VoiceSpecification.COLUMN_NAME_DATA, byteBuffer.array())
-    val rows: Int
-    val rowId: Long
-    if (voiceSpecificationEntry != null) {
-      rows = database!!.update(VoiceSpecification.TABLE_NAME, values, VoiceSpecification._ID + "= ?", arrayOf(voiceSpecificationEntry!!.id!!.toString()))
-      rowId = if (rows > 0) {
-        voiceSpecificationEntry!!.id!!
-      } else {
-        -1L
-      }
+    if (rowId > 0) {
+      database!!.update(VoiceSpecification.TABLE_NAME, values, VoiceSpecification._ID + "= ?", arrayOf(rowId.toString()))
     } else {
       rowId = database!!.insert(VoiceSpecification.TABLE_NAME, null, values)
     }

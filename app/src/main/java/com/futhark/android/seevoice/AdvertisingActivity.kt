@@ -38,7 +38,9 @@ class AdvertisingActivity : BaseActivity() {
 
   override fun onResume() {
     super.onResume()
-    TableVoiceAccount.getVoiceAccountEntry(SeeVoiceSqliteDatabaseHelper(this).writableDatabase)
+    val database = SeeVoiceSqliteDatabaseHelper(this).writableDatabase
+    TableVoiceAccount.getVoiceAccountEntry(database)
+    database.close()
     gotoMainActivity()
   }
 

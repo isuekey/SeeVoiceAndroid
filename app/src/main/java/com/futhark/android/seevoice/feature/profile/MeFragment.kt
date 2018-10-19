@@ -1,12 +1,11 @@
 package com.futhark.android.seevoice.feature.profile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.Button
 import android.widget.TextView
 import com.futhark.android.seevoice.R
 import com.futhark.android.seevoice.base.BaseFragment
+import com.futhark.android.seevoice.base.BaseFragmentActivity
 import com.futhark.android.seevoice.model.database.SeeVoiceSqliteDatabaseHelper
 import com.futhark.android.seevoice.model.database.TableVoiceAccount
 
@@ -24,7 +23,9 @@ class MeFragment : BaseFragment() {
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
-    voiceAccountEntry = TableVoiceAccount.getVoiceAccountEntry(SeeVoiceSqliteDatabaseHelper(activity).writableDatabase)
+    val database = SeeVoiceSqliteDatabaseHelper(activity).writableDatabase
+    voiceAccountEntry = TableVoiceAccount.getVoiceAccountEntry(database)
+    database.close()
   }
 
   override fun onResume() {
@@ -32,15 +33,29 @@ class MeFragment : BaseFragment() {
     refreshView()
   }
 
-  override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater?) {
     super.onCreateOptionsMenu(menu, inflater)
     inflater!!.inflate(R.menu.menu_me_account, menu)
-    Log.i(TAG, "voiceAccountEntry on create menu" + (voiceAccountEntry!!.account))
+    val isAnonymous = isAnonymousAccount(voiceAccountEntry)
+    menu.findItem(R.id.menu_me_account_edit).isVisible = !isAnonymous
+    menu.findItem(R.id.menu_me_account_switch).isVisible = !isAnonymous
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       R.id.menu_me_account_add -> {
+        activity.fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.activity_fragment_base, AddAccountFragment()).commit()
+        return true
+      }
+      R.id.menu_me_account_edit -> {
+        val fragment = EditAccountFragment()
+        val bundle = Bundle()
+        bundle.putSerializable(EditAccountFragment.DUTY_FATE_OLD_ACCOUNT, voiceAccountEntry)
+        fragment.arguments = bundle
+        activity.fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.activity_fragment_base, EditAccountFragment()).commit()
+        return true
+      }
+      R.id.menu_me_account_switch -> {
         return true
       }
     }
@@ -54,17 +69,9 @@ class MeFragment : BaseFragment() {
     view.findViewById<TextView>(R.id.label_me_lang).text = voiceAccountEntry!!.lang
     view.findViewById<TextView>(R.id.label_me_full_name).text = voiceAccountEntry!!.fullName
     view.findViewById<TextView>(R.id.label_me_created_at).text = voiceAccountEntry!!.createdAt
+  }
 
-    if (voiceAccountEntry!!.status != null && voiceAccountEntry!!.status!! > 0) {
-      view.findViewById<Button>(R.id.button_me_edit_profile).visibility = View.GONE
-      return
-    }
-    view.findViewById<Button>(R.id.button_me_edit_profile).setOnClickListener { v ->
-      when (v.id) {
-        R.id.button_me_edit_profile -> {
-
-        }
-      }
-    }
+  private fun isAnonymousAccount(voiceAccountEntry: TableVoiceAccount.VoiceAccountEntry?): Boolean {
+    return (voiceAccountEntry?.status ?: -1) < 0
   }
 }

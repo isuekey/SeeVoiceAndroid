@@ -30,10 +30,4 @@
     style="@style/meTitleText"
     android:text="@string/label_empty"
     />
-  <Button
-    android:id="@+id/button_me_edit_profile"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/label_me_edit"
-    />
 </LinearLayout>

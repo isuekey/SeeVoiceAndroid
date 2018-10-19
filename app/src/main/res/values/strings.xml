@@ -18,6 +18,8 @@
   <string name="label_phonetic">声音音标</string>
   <string name="label_author">作者</string>
   <string name="label_save">保存</string>
+  <string name="label_cancel">取消</string>
+  <string name="label_reset">重置</string>
   <string name="label_modify">修改</string>
   <string name="label_self">我</string>
   <string name="label_about">关于</string>
@@ -33,7 +35,8 @@
   <!-- thanks -->
   <string name="label_thanks_title">致谢</string>
   <string name="content_thanks">
-    感谢刘**提供的思路，感谢刘**给予产品设计及体验支持。感谢NG提供的machine-learning课程。
+    感谢刘**提供的思路，感谢刘**给予产品设计及体验支持。
+    感谢NG提供的machine-learning课程。
     感谢探索频道提供的科普知识。
   </string>
   <string name="label_thanks_license">LICENSE</string>
@@ -54,6 +57,10 @@
 
   <!-- me -->
   <string name="label_me_account">账号</string>
+  <string name="label_me_password">密码</string>
+  <string name="label_me_old_password">旧密码</string>
+  <string name="label_me_new_password">新密码</string>
+  <string name="label_me_confirm_password">确认密码</string>
   <string name="label_me_title">称谓</string>
   <string name="label_me_lang">母语</string>
   <string name="label_me_full_name">全称</string>
@@ -61,4 +68,12 @@
   <string name="menu_me_account_edit">编辑</string>
   <string name="menu_me_account_add">增加</string>
   <string name="menu_me_account_switch">切换</string>
+  <string name="hint_me_input_account">可以打印的字符</string>
+  <string name="hint_me_input_password">非空字符字母与数字，区分大小写</string>
+  <string name="hint_me_old_password">输入旧密码</string>
+  <string name="hint_me_new_password">@string/hint_me_input_password</string>
+  <string name="hint_me_confirm_password">再次输入密码</string>
+  <string name="hint_me_input_title">称呼：总，董事长，先生，女士之类的</string>
+  <string name="hint_me_input_lang">输入母语简写</string>
+  <string name="hint_me_input_full_name">输入名称</string>
 </resources>
